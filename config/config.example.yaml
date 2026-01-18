@@ -1,0 +1,56 @@
+# fabric-lite configuration
+# Copy this file to ~/.config/fabric-lite/config.yaml
+
+# Default provider to use
+default_provider: openai
+
+# Default model for each provider
+default_model: gpt-4o-mini
+
+# Provider configurations
+providers:
+  openai:
+    # Set via environment variable or directly here
+    api_key: ${OPENAI_API_KEY}
+    # Optional: custom base URL for OpenAI-compatible APIs
+    # base_url: https://api.openai.com/v1
+    models:
+      - gpt-4o
+      - gpt-4o-mini
+      - gpt-4-turbo
+      - gpt-3.5-turbo
+
+  ollama:
+    # Local Ollama server
+    base_url: http://localhost:11434
+    models:
+      - llama3.2
+      - mistral
+      - codellama
+
+  anthropic:
+    api_key: ${ANTHROPIC_API_KEY}
+    models:
+      - claude-3-5-sonnet-20241022
+      - claude-3-haiku-20240307
+
+# Pattern settings
+patterns:
+  # Where to look for patterns (in order of priority)
+  paths:
+    - ~/.config/fabric-lite/patterns
+    - ./patterns
+
+# Output settings
+output:
+  # Default output format: text, markdown, json
+  format: markdown
+  # Enable streaming output
+  stream: true
+
+# Logging
+log:
+  # Log level: debug, info, warn, error
+  level: info
+  # Log file (optional, logs to stderr if not set)
+  # file: ~/.config/fabric-lite/fabric-lite.log
