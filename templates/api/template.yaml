@@ -1,0 +1,109 @@
+name: api
+description: REST API service
+directories:
+  - cmd
+  - internal/handlers
+  - internal/models
+  - internal/services
+  - internal/middleware
+  - tests
+  - docs
+
+files:
+  - path: README.md
+    content: |
+      # {{.Name}}
+
+      {{.Description}}
+
+      ## Getting Started
+
+      ### Prerequisites
+
+      - Go 1.21+
+      - Database (PostgreSQL/MySQL/SQLite)
+
+      ### Installation
+
+      ```bash
+      go mod download
+      ```
+
+      ### Running
+
+      ```bash
+      make run
+      ```
+
+      The API will be available at `http://localhost:8080`
+
+      ## API Documentation
+
+      See [docs/api.md](docs/api.md) for endpoint documentation.
+
+      ## Project Structure
+
+      ```
+      cmd/                    # Application entrypoints
+      internal/
+      ├── handlers/           # HTTP request handlers
+      ├── models/             # Data models
+      ├── services/           # Business logic
+      └── middleware/         # HTTP middleware
+      tests/                  # Test files
+      docs/                   # Documentation
+      ```
+
+  - path: Makefile
+    content: |
+      .PHONY: build run test clean
+
+      BINARY={{.Name}}
+      VERSION?=0.1.0
+
+      build:
+      	go build -ldflags "-X main.Version=$(VERSION)" -o bin/$(BINARY) ./cmd/$(BINARY)
+
+      run:
+      	go run ./cmd/$(BINARY)
+
+      test:
+      	go test -v ./...
+
+      clean:
+      	rm -rf bin/
+
+  - path: docs/api.md
+    content: |
+      # API Documentation
+
+      ## Base URL
+
+      ```
+      http://localhost:8080/api/v1
+      ```
+
+      ## Endpoints
+
+      ### Health Check
+
+      ```
+      GET /health
+      ```
+
+      Returns service health status.
+
+      ## Authentication
+
+      TBD
+
+      ## Error Responses
+
+      All errors return JSON with the following structure:
+
+      ```json
+      {
+        "error": "Error message",
+        "code": "ERROR_CODE"
+      }
+      ```

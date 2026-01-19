@@ -1,0 +1,100 @@
+name: library
+description: Reusable library/package
+directories:
+  - src
+  - tests
+  - examples
+  - docs
+
+files:
+  - path: README.md
+    content: |
+      # {{.Name}}
+
+      {{.Description}}
+
+      ## Installation
+
+      ```bash
+      # For Go projects
+      go get github.com/user/{{.Name}}
+
+      # For Node.js projects
+      npm install {{.Name}}
+
+      # For Python projects
+      pip install {{.Name}}
+      ```
+
+      ## Usage
+
+      ```go
+      import "github.com/user/{{.Name}}"
+
+      // Example usage
+      result := {{.Name}}.DoSomething()
+      ```
+
+      ## API Reference
+
+      See [docs/api.md](docs/api.md) for full API documentation.
+
+      ## Examples
+
+      Check the [examples](examples/) directory for usage examples.
+
+      ## Development
+
+      ### Testing
+
+      ```bash
+      make test
+      ```
+
+      ### Building
+
+      ```bash
+      make build
+      ```
+
+      ## License
+
+      MIT License
+
+  - path: Makefile
+    content: |
+      .PHONY: build test clean docs
+
+      build:
+      	go build ./...
+
+      test:
+      	go test -v ./...
+
+      test-coverage:
+      	go test -coverprofile=coverage.out ./...
+      	go tool cover -html=coverage.out -o coverage.html
+
+      clean:
+      	rm -f coverage.out coverage.html
+
+      docs:
+      	godoc -http=:6060
+
+  - path: docs/api.md
+    content: |
+      # API Reference
+
+      ## Package {{.Name}}
+
+      ```go
+      import "github.com/user/{{.Name}}"
+      ```
+
+      ### Functions
+
+      TBD - Document public functions here
+
+      ### Types
+
+      TBD - Document public types here

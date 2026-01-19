@@ -1,0 +1,124 @@
+# Forge Development Phases Configuration
+# This file defines the development phases and their characteristics
+
+phases:
+  - name: discovery
+    description: Research and requirements gathering
+    primary_tool: gemini
+    tool_reason: Free tier, 1M context window, Google Search integration for research
+    checkpoint:
+      criteria:
+        - Requirements document exists
+        - User stories or use cases defined
+        - Technical constraints identified
+        - Research notes compiled
+    artifacts:
+      - requirements.md
+      - user_stories.md
+      - research_notes.md
+    prompts:
+      initial: |
+        You are helping with the discovery phase of a software project.
+        Gather requirements, research solutions, and document findings.
+
+  - name: planning
+    description: Architecture and component design
+    primary_tool: opencode
+    tool_reason: Read-only exploration mode, provider-agnostic planning
+    checkpoint:
+      criteria:
+        - Architecture document exists
+        - Component breakdown defined
+        - Technology decisions documented
+        - Dependencies identified
+    artifacts:
+      - architecture.md
+      - components.md
+      - tech_decisions.md
+    prompts:
+      initial: |
+        You are helping with the planning phase.
+        Design the architecture and break down the system into components.
+
+  - name: design
+    description: API and data model definition
+    primary_tool: opencode
+    tool_reason: Continue planning context, ideal for API/schema design
+    checkpoint:
+      criteria:
+        - API specification defined
+        - Data models documented
+        - Interface contracts specified
+        - Error handling strategy defined
+    artifacts:
+      - api_spec.md
+      - data_models.md
+      - interfaces.md
+    prompts:
+      initial: |
+        You are helping with the design phase.
+        Define APIs, data models, and interface contracts.
+
+  - name: implementation
+    description: Code development and feature building
+    primary_tool: codex
+    tool_reason: Advanced reasoning, code review capabilities, multimodal support
+    checkpoint:
+      criteria:
+        - Code builds successfully
+        - Core features implemented
+        - Basic tests exist
+        - No critical linting errors
+    artifacts:
+      - implementation_notes.md
+      - code_review.md
+    prompts:
+      initial: |
+        You are helping with the implementation phase.
+        Write code, implement features, and ensure quality.
+
+  - name: testing
+    description: Test creation and quality assurance
+    primary_tool: gemini
+    tool_reason: Large context for analyzing coverage, good at test generation
+    checkpoint:
+      criteria:
+        - Tests pass
+        - Coverage threshold met
+        - Edge cases covered
+        - Integration tests exist
+    artifacts:
+      - test_plan.md
+      - coverage_report.md
+    prompts:
+      initial: |
+        You are helping with the testing phase.
+        Analyze coverage, write tests, and ensure quality.
+
+  - name: deployment
+    description: Documentation and release preparation
+    primary_tool: fabric
+    tool_reason: Pattern-based generation for docs, changelogs, release notes
+    checkpoint:
+      criteria:
+        - README is complete
+        - Changelog updated
+        - Deployment docs exist
+        - Release notes prepared
+    artifacts:
+      - changelog.md
+      - release_notes.md
+      - deployment_guide.md
+    prompts:
+      initial: |
+        You are preparing for deployment.
+        Create documentation, changelog, and release notes.
+
+# Phase transition rules
+transitions:
+  # Allow skipping phases with --force
+  allow_skip: true
+  # Require checkpoint validation before completing
+  require_checkpoint: true
+  # Allow going back to previous phases
+  allow_backtrack: true

@@ -1,0 +1,106 @@
+# Forge Project Configuration
+# Copy this to .forge/config.yaml in your project
+
+# Project information
+name: my-project
+description: A brief description of your project
+version: 0.1.0
+
+# Template used to scaffold the project (optional)
+template: webapp  # Options: webapp, cli, api, library
+
+# Tool configuration
+tools:
+  gemini:
+    model: gemini-2.0-flash-exp
+    enabled: true
+    # api_key: ${GOOGLE_API_KEY}  # Use environment variable
+
+  codex:
+    model: o3-mini
+    provider: openai
+    enabled: true
+    # api_key: ${OPENAI_API_KEY}
+
+  opencode:
+    provider: anthropic
+    model: claude-sonnet-4-20250514
+    enabled: true
+    # api_key: ${ANTHROPIC_API_KEY}
+
+  fabric:
+    model: gpt-4o-mini
+    patterns_dir: ~/.config/fabric-lite/patterns
+    enabled: true
+
+# Phase-specific tool overrides (optional)
+# Override the default tool for specific phases
+phases:
+  # discovery: gemini     # default
+  # planning: opencode    # default
+  # design: opencode      # default
+  # implementation: codex # default
+  # testing: gemini       # default
+  # deployment: fabric    # default
+
+# Checkpoint configuration
+checkpoints:
+  # Skip checkpoint validation (not recommended)
+  skip: false
+
+  # Custom validation commands per phase
+  custom:
+    # implementation:
+    #   - command: make build
+    #     description: Verify build succeeds
+    #   - command: make lint
+    #     description: Check linting passes
+
+    # testing:
+    #   - command: make test
+    #     description: Run test suite
+    #   - command: make test-coverage
+    #     description: Check coverage threshold
+
+# Artifact storage
+artifacts:
+  # Directory for generated artifacts (relative to .forge/)
+  dir: artifacts
+
+  # Keep history of all artifacts
+  keep_history: true
+
+  # Maximum number of artifact versions to keep per phase
+  max_versions: 10
+
+# Integration settings
+integrations:
+  # Git integration
+  git:
+    # Auto-commit artifacts after phase completion
+    auto_commit: false
+    # Commit message template
+    commit_template: "forge: Complete {{.Phase}} phase"
+
+  # GitHub integration
+  github:
+    # Create issues for phase tasks
+    create_issues: false
+    # Add labels to issues
+    labels:
+      - forge
+      - ai-assisted
+
+# Advanced settings
+advanced:
+  # Verbose output
+  verbose: false
+
+  # Dry run mode (don't execute tools, just show what would happen)
+  dry_run: false
+
+  # Timeout for tool execution (in seconds)
+  tool_timeout: 300
+
+  # Maximum retries for failed tool execution
+  max_retries: 3

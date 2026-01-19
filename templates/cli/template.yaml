@@ -1,0 +1,78 @@
+name: cli
+description: Command-line application
+directories:
+  - cmd
+  - internal
+  - pkg
+  - tests
+  - docs
+
+files:
+  - path: README.md
+    content: |
+      # {{.Name}}
+
+      {{.Description}}
+
+      ## Installation
+
+      ```bash
+      go install ./cmd/{{.Name}}
+      ```
+
+      Or build from source:
+
+      ```bash
+      make build
+      ```
+
+      ## Usage
+
+      ```bash
+      {{.Name}} --help
+      ```
+
+      ## Development
+
+      ### Building
+
+      ```bash
+      make build
+      ```
+
+      ### Testing
+
+      ```bash
+      make test
+      ```
+
+      ## Project Structure
+
+      ```
+      cmd/           # Application entrypoints
+      internal/      # Private application code
+      pkg/           # Public library code
+      tests/         # Test files
+      ```
+
+  - path: Makefile
+    content: |
+      .PHONY: build test clean
+
+      BINARY={{.Name}}
+      VERSION?=0.1.0
+
+      build:
+      	go build -ldflags "-X main.Version=$(VERSION)" -o bin/$(BINARY) ./cmd/$(BINARY)
+
+      test:
+      	go test -v ./...
+
+      clean:
+      	rm -rf bin/
+
+  - path: go.mod
+    content: |
+      module github.com/user/{{.Name}}
+
+      go 1.21

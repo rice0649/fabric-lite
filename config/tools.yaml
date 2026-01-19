@@ -1,0 +1,115 @@
+# AI Tools Configuration for Forge
+# Configure the AI coding assistants used in each phase
+
+tools:
+  gemini:
+    name: Gemini CLI
+    command: gemini
+    description: Google Gemini CLI with 1M context window
+    install: |
+      # Install via npm
+      npm install -g @anthropic/gemini-cli
+
+      # Or via homebrew
+      brew install gemini-cli
+    features:
+      - 1M token context window
+      - Google Search integration
+      - Free tier available
+      - Multimodal support
+    best_for:
+      - Research and discovery
+      - Large codebase analysis
+      - Test coverage analysis
+    config:
+      model: gemini-2.0-flash-exp
+      # API key from environment: GOOGLE_API_KEY
+
+  codex:
+    name: Codex CLI
+    command: codex
+    description: OpenAI Codex for advanced code generation
+    install: |
+      # Install via npm
+      npm install -g @openai/codex-cli
+    features:
+      - Advanced reasoning (o3-mini)
+      - Code review capabilities
+      - Multimodal support
+      - Full auto-mode
+    best_for:
+      - Implementation
+      - Code generation
+      - Refactoring
+    config:
+      model: o3-mini
+      provider: openai
+      # API key from environment: OPENAI_API_KEY
+
+  opencode:
+    name: OpenCode
+    command: opencode
+    description: Provider-agnostic AI coding assistant
+    install: |
+      # Install via Go
+      go install github.com/opencode/opencode@latest
+    features:
+      - Provider agnostic (Anthropic, OpenAI, etc.)
+      - Plan mode for architecture
+      - Read-only exploration
+      - Context-aware
+    best_for:
+      - Planning and architecture
+      - Design exploration
+      - API modeling
+    config:
+      provider: anthropic
+      model: claude-sonnet-4-20250514
+      # API key from environment: ANTHROPIC_API_KEY
+
+  fabric:
+    name: fabric-lite
+    command: fabric-lite
+    description: Pattern-based AI augmentation framework
+    install: |
+      # Install from source
+      go install github.com/rice0649/fabric-lite/cmd/fabric-lite@latest
+
+      # Or clone and build
+      git clone https://github.com/rice0649/fabric-lite
+      cd fabric-lite && make install
+    features:
+      - Pattern-based prompts
+      - Reproducible outputs
+      - Customizable patterns
+      - Lightweight
+    best_for:
+      - Documentation generation
+      - Changelog creation
+      - Release notes
+      - Code summarization
+    config:
+      model: gpt-4o-mini
+      patterns_dir: ~/.config/fabric-lite/patterns
+      # API key from environment: OPENAI_API_KEY
+
+# Tool selection strategy
+selection:
+  # How tools are selected for each phase
+  strategy: phase_default  # or 'user_preference', 'availability'
+
+  # Fallback order when primary tool is unavailable
+  fallback_order:
+    - opencode
+    - gemini
+    - codex
+    - fabric
+
+# Environment variables for API keys
+environment:
+  required:
+    - OPENAI_API_KEY
+    - ANTHROPIC_API_KEY
+  optional:
+    - GOOGLE_API_KEY
+    - AZURE_OPENAI_KEY
