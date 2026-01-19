@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"sort"
 )
 
 // Version is set at build time via ldflags
@@ -27,9 +28,7 @@ func run() error {
 			printUsage()
 			return nil
 		case "--list", "-l":
-			fmt.Println("Available patterns:")
-			fmt.Println("  - summarize")
-			fmt.Println("\nMore patterns coming soon!")
+			printPatterns()
 			return nil
 		}
 	}
@@ -65,4 +64,27 @@ Examples:
 
 For more information, visit: https://github.com/rice0649/fabric-lite
 `, Version)
+}
+
+func printPatterns() {
+	fmt.Println("Available patterns:")
+
+	entries, err := os.ReadDir("patterns")
+	if err != nil {
+		fmt.Println("  - summarize")
+		fmt.Println("\nMore patterns coming soon!")
+		return
+	}
+
+	var names []string
+	for _, entry := range entries {
+		if entry.IsDir() {
+			names = append(names, entry.Name())
+		}
+	}
+	sort.Strings(names)
+
+	for _, name := range names {
+		fmt.Printf("  - %s\n", name)
+	}
 }
