@@ -13,8 +13,20 @@ type ProjectState struct {
 	PhaseStartedAt time.Time         `yaml:"phase_started_at,omitempty"`
 	PhaseStatuses  map[string]string `yaml:"phase_statuses"` // phase -> status (pending, in_progress, completed)
 	Activities     []Activity        `yaml:"activities"`
+	Auto           *AutoState        `yaml:"auto,omitempty"` // State for forge auto command
 	CreatedAt      time.Time         `yaml:"created_at"`
 	UpdatedAt      time.Time         `yaml:"updated_at"`
+}
+
+// AutoState tracks the state of automated phase execution
+type AutoState struct {
+	LastCompletedPhase string `yaml:"last_completed_phase,omitempty"`
+	CurrentPhaseStatus string `yaml:"current_phase_status,omitempty"` // running, completed, failed, validation_failed
+	FromPhase          string `yaml:"from_phase,omitempty"`
+	UntilPhase         string `yaml:"until_phase,omitempty"`
+	SkipValidation     bool   `yaml:"skip_validation,omitempty"`
+	Feedback           string `yaml:"feedback,omitempty"`
+	StartedAt          time.Time `yaml:"started_at,omitempty"`
 }
 
 // Activity represents a logged activity in the project

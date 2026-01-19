@@ -31,6 +31,7 @@ Supported tools:
 	// Add subcommands
 	rootCmd.AddCommand(newInitCmd())
 	rootCmd.AddCommand(newRunCmd())
+	rootCmd.AddCommand(newAutoCmd())
 	rootCmd.AddCommand(newPhaseCmd())
 	rootCmd.AddCommand(newStatusCmd())
 	rootCmd.AddCommand(newHistoryCmd())
