@@ -34,6 +34,7 @@ Supported tools:
 	rootCmd.AddCommand(newPhaseCmd())
 	rootCmd.AddCommand(newStatusCmd())
 	rootCmd.AddCommand(newHistoryCmd())
+	rootCmd.AddCommand(newSessionCmd())
 
 	return rootCmd
 }
