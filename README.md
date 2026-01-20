@@ -115,6 +115,22 @@ fabric-lite now includes a comprehensive tool ecosystem for specialized AI tasks
 | **ollama** | Local processing | Fast, private tasks |
 | **fabric** | Pattern execution | Documentation, structured outputs |
 
+### Media & Content Processing
+
+fabric-lite supports integration with external transcription tools for video and audio analysis:
+
+```bash
+# YouTube transcription using yt-dlp (recommended)
+yt-dlp --write-auto-sub --write-sub "https://www.youtube.com/watch?v=VIDEO_ID" --sub-format "srt" -o "transcript.srt"
+
+# Analyze transcript with fabric-lite tools
+./bin/fabric-lite run gemini -P "analyze this transcript for insights: $(cat transcript.srt)"
+./bin/fabric-lite run codex -P "create analysis script based on: $(cat transcript.srt)"
+
+# Privacy-focused alternative (invidious instance)
+curl "http://localhost:8080/api/v1/videos/VIDEO_ID?format=json"
+```
+
 ### Tool Execution Examples
 
 ```bash
