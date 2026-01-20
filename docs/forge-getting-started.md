@@ -8,10 +8,12 @@ AI Project Forge orchestrates multiple AI coding assistants through structured d
 
 - Go 1.21 or later
 - At least one AI CLI tool installed:
-  - [Gemini CLI](https://github.com/google/gemini-cli) (recommended for discovery/testing)
-  - [Codex CLI](https://github.com/openai/codex-cli) (recommended for implementation)
-  - [OpenCode](https://github.com/opencode/opencode) (recommended for planning/design)
-  - [fabric-lite](https://github.com/rice0649/fabric-lite) (recommended for documentation)
+  - [fabric-lite](https://github.com/rice0649/fabric-lite) (NEW - unified patterns & tools)
+  - [Gemini CLI](https://github.com/google/gemini-cli) (research & analysis)
+  - [Codex CLI](https://github.com/openai/codex-cli) (coding & implementation)
+  - [Claude CLI](https://github.com/anthropic/claude-cli) (advanced reasoning)
+  - [OpenCode](https://github.com/opencode/opencode) (interactive coding)
+  - Local Ollama (built-in to fabric-lite) for fast, private tasks
 
 ### Install from Source
 
@@ -66,11 +68,16 @@ forge phase start discovery
 # Run the default tool for the current phase
 forge run
 
-# Or specify a tool
-forge run --tool gemini
+# Specify any available tool
+forge run --tool gemini        # Research with Gemini CLI
+forge run --tool claude         # Advanced reasoning with Claude CLI
+forge run --tool codex         # Code implementation with Codex CLI
+forge run --tool opencode       # Interactive coding with OpenCode
+forge run --tool ollama         # Fast local analysis with built-in Ollama
 
-# Use a fabric-lite pattern
-forge run --pattern research_topic
+# Use fabric-lite patterns with forge
+forge run --pattern research_topic   # Uses fabric-lite patterns
+forge run --tool fabric        # Direct fabric-lite pattern execution
 ```
 
 ### 4. Complete the Phase
@@ -115,14 +122,14 @@ my-app/
 
 ## Development Phases
 
-| Phase | Tool | Purpose |
-|-------|------|---------|
-| Discovery | Gemini CLI | Research, requirements gathering |
-| Planning | OpenCode | Architecture design |
-| Design | OpenCode | API and data modeling |
-| Implementation | Codex CLI | Code development |
-| Testing | Gemini CLI | Test creation, coverage analysis |
-| Deployment | fabric-lite | Documentation, release notes |
+| Phase | Primary Tool | Secondary Tools | Purpose |
+|-------|--------------|--------------|---------|
+| Discovery | gemini | fabric-lite (research) | Requirements gathering, market analysis |
+| Planning | claude | opencode, fabric-lite | Architecture design, system planning |
+| Design | claude | opencode, fabric-lite | API design, data modeling |
+| Implementation | codex | ollama, fabric-lite | Code development, feature implementation |
+| Testing | gemini | ollama, codex | Test creation, validation, coverage analysis |
+| Deployment | fabric | all tools | Documentation, release automation |
 
 ## Next Steps
 

@@ -63,7 +63,9 @@ cp -r patterns/* ~/.config/fabric-lite/patterns/
 
 ## Basic Usage
 
-### Summarize Content
+fabric-lite now supports two modes of operation: **pattern execution** and **direct tool invocation**.
+
+### Pattern Execution (Original)
 
 ```bash
 # From a file
@@ -76,17 +78,30 @@ xclip -selection clipboard -o | fabric-lite --pattern summarize
 curl -s https://example.com/article | fabric-lite --pattern summarize
 ```
 
-### Explain Code
+### Direct Tool Invocation (NEW)
 
 ```bash
-cat mycode.py | fabric-lite --pattern explain_code
+# Execute specialized AI tools directly
+fabric-lite run codex -P "implement REST API with validation"
+fabric-lite run gemini -P "research microservices architecture patterns"
+fabric-lite run claude -P "design scalable system architecture"
+fabric-lite run ollama -P "quickly analyze this dataset"
+
+# Pattern execution with tool override
+fabric-lite run --pattern summarize --provider claude input.txt
+fabric-lite run --pattern code_review --provider codex --model gpt-4
 ```
 
-### Extract Ideas
+### Available Tools
 
-```bash
-fabric-lite --pattern extract_ideas < book_chapter.txt
-```
+| Tool | Command | Description | Best Use Case |
+|------|---------|-------------|--------------|
+| **codex** | `run codex` | Meta-coding assistant | Delegates to any configured provider |
+| **gemini** | `run gemini` | Research & analysis | Research tasks, documentation |
+| **claude** | `run claude` | Advanced reasoning | Architecture design, complex analysis |
+| **opencode** | `run opencode` | Interactive coding | Real-time code assistance |
+| **ollama** | `run ollama` | Local processing | Fast, private tasks |
+| **fabric** | `run --pattern` | Pattern execution | Documentation, structured outputs |
 
 ### List Available Patterns
 
