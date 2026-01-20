@@ -265,11 +265,31 @@ class YouTubeAnalyzer:
 
 def main():
     if len(sys.argv) < 3:
-        print("Usage: python yt_analyzer.py <video_id> <transcript_file>")
+        print("Usage: python yt_analyzer.py <video_id> <transcript_file> [video_url]")
+        print("Options:")
+        print("  <video_id>: YouTube video ID")
+        print("  <transcript_file>: Path to transcript file (optional)")
+        print("  <video_url>: YouTube video URL (optional)")
+        print("\nExamples:")
+        print("  python yt_analyzer.py VIDEO_ID transcript.srt")
+        print("  python yt_analyzer.py VIDEO_ID transcript.srt https://www.youtube.com/watch?v=VIDEO_ID")
         sys.exit(1)
     
-    video_id = sys.argv[1]
-    transcript_path = sys.argv[2]
+    # Parse arguments
+    video_id = sys.argv[1] if len(sys.argv) > 1 else None
+    transcript_path = sys.argv[2] if len(sys.argv) > 2 else None
+    video_url = sys.argv[3] if len(sys.argv) > 3 else None
+    
+    # Auto-detect YouTube URL from video_id if not provided
+    if not video_url and video_id:
+        video_url = f"https://www.youtube.com/watch?v={video_id}"
+    
+    # Parse video ID from URL
+    if video_url and "youtube.com/watch?v=" in video_url and not video_id:
+        import re
+        match = re.search(r"youtube\.com/watch\?v=([^&]+)", video_url)
+        if match:
+            video_id = match.group(1)
     
     analyzer = YouTubeAnalyzer()
     analysis = analyzer.analyze_transcript(video_id, transcript_path)
