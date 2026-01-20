@@ -51,11 +51,11 @@ type FabricConfig struct {
 }
 
 type ClaudeConfig struct {
-	Model      string `yaml:"model,omitempty"`
-	APIKey     string `yaml:"api_key,omitempty"`     // Usually from ANTHROPIC_API_KEY env
-	APIKeyEnv  string `yaml:"api_key_env,omitempty"` // Env var name for API key
-	MaxTokens  int    `yaml:"max_tokens,omitempty"`
-	Enabled    bool   `yaml:"enabled"`
+	Model     string `yaml:"model,omitempty"`
+	APIKey    string `yaml:"api_key,omitempty"`     // Usually from ANTHROPIC_API_KEY env
+	APIKeyEnv string `yaml:"api_key_env,omitempty"` // Env var name for API key
+	MaxTokens int    `yaml:"max_tokens,omitempty"`
+	Enabled   bool   `yaml:"enabled"`
 }
 
 type OllamaConfig struct {

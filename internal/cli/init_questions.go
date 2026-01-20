@@ -15,19 +15,19 @@ type TemplateOptions struct {
 	Features       []string
 
 	// cli options
-	Language    string // Go, Python, Rust, Node
-	Subcommands []string
+	Language     string // Go, Python, Rust, Node
+	Subcommands  []string
 	ConfigFormat string // YAML, JSON, TOML, None
 
 	// api options
-	Database     string // PostgreSQL, MySQL, SQLite, MongoDB, None
-	AuthType     string // JWT, OAuth, API Key, None
-	Endpoints    []string
-	OpenAPISpec  bool
+	Database    string // PostgreSQL, MySQL, SQLite, MongoDB, None
+	AuthType    string // JWT, OAuth, API Key, None
+	Endpoints   []string
+	OpenAPISpec bool
 
 	// library options
-	Exports     []string
-	CLIWrapper  bool
+	Exports    []string
+	CLIWrapper bool
 }
 
 // askTemplateQuestions asks template-specific questions and returns the options

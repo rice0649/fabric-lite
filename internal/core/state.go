@@ -20,12 +20,12 @@ type ProjectState struct {
 
 // AutoState tracks the state of automated phase execution
 type AutoState struct {
-	LastCompletedPhase string `yaml:"last_completed_phase,omitempty"`
-	CurrentPhaseStatus string `yaml:"current_phase_status,omitempty"` // running, completed, failed, validation_failed
-	FromPhase          string `yaml:"from_phase,omitempty"`
-	UntilPhase         string `yaml:"until_phase,omitempty"`
-	SkipValidation     bool   `yaml:"skip_validation,omitempty"`
-	Feedback           string `yaml:"feedback,omitempty"`
+	LastCompletedPhase string    `yaml:"last_completed_phase,omitempty"`
+	CurrentPhaseStatus string    `yaml:"current_phase_status,omitempty"` // running, completed, failed, validation_failed
+	FromPhase          string    `yaml:"from_phase,omitempty"`
+	UntilPhase         string    `yaml:"until_phase,omitempty"`
+	SkipValidation     bool      `yaml:"skip_validation,omitempty"`
+	Feedback           string    `yaml:"feedback,omitempty"`
 	StartedAt          time.Time `yaml:"started_at,omitempty"`
 }
 

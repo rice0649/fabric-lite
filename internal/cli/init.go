@@ -302,7 +302,6 @@ func handleResume() error {
 	return nil
 }
 
-
 func applyTemplate(template string) error {
 	// Template application will create standard directories
 	switch template {
