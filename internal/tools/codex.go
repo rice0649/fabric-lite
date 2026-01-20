@@ -1,126 +1,70 @@
 package tools
 
 import (
-	"bytes"
 	"fmt"
-	"os"
-	"os/exec"
+	"github.com/rice0649/fabric-lite/internal/core"
 )
 
-// CodexTool wraps the Codex CLI for implementation tasks
+const codexSystemPrompt = `You are an expert AI programming assistant, a meta-tool known as 'Codex'. Your purpose is to help with code planning, review, and execution. You will be given a prompt and context, and you must return a clear, concise, and actionable response, formatted in markdown unless otherwise specified. When generating code, provide complete, runnable snippets. When reviewing code, be specific and provide examples. When planning, break down the task into clear steps.`
+
+// CodexTool is a meta-tool that uses other providers for code-specific tasks.
 type CodexTool struct {
 	BaseTool
+	Config core.CodexConfig // Using the config struct from the core package
 }
 
-// NewCodexTool creates a new Codex CLI tool wrapper
+// NewCodexTool creates a new CodexTool.
 func NewCodexTool() *CodexTool {
 	return &CodexTool{
 		BaseTool: BaseTool{
 			name:        "codex",
-			description: "OpenAI Codex CLI - Advanced reasoning for implementation",
-			command:     "codex",
+			description: "The Code Generation Specialist. A meta-tool for writing, refactoring, and explaining code based on a plan.",
 		},
 	}
 }
 
-// Execute runs the Codex CLI with the given context
+// IsAvailable checks if the tool is enabled in the config.
+// A more robust check would verify if its configured provider is available.
+func (t *CodexTool) IsAvailable() bool {
+	// For now, we assume it's available if we can load its config.
+	// This will be improved when config loading is implemented.
+	return true
+}
+
+// Execute runs the codex meta-tool. It's headless by nature.
 func (t *CodexTool) Execute(ctx ExecutionContext) (*ExecutionResult, error) {
-	// Build the prompt based on phase
-	prompt := ctx.Prompt
-	if prompt == "" {
-		prompt = t.getPhasePrompt(ctx.Phase)
+	// TODO: Replace this with actual config loading once implemented.
+	// For now, we'll simulate the config to use Ollama.
+	t.Config.Provider = "ollama"
+	t.Config.Model = "llama3:latest"
+
+	if t.Config.Provider == "" {
+		return nil, fmt.Errorf("codex tool requires a provider (e.g., ollama, gemini) to be configured")
 	}
 
-	// Build command arguments
-	args := []string{}
-
-	// Add prompt if provided
-	if prompt != "" {
-		args = append(args, prompt)
-	}
-
-	// Add any additional arguments
-	args = append(args, ctx.Args...)
-
-	// Create command
-	cmd := exec.Command(t.command, args...)
-	cmd.Dir = ctx.WorkDir
-	if cmd.Dir == "" {
-		cmd.Dir, _ = os.Getwd()
-	}
-
-	// Set environment
-	cmd.Env = os.Environ()
-	for k, v := range ctx.Env {
-		cmd.Env = append(cmd.Env, fmt.Sprintf("%s=%s", k, v))
-	}
-
-	// Connect to terminal for interactive use
-	cmd.Stdin = os.Stdin
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-
-	// Run the command
-	err := cmd.Run()
-
-	result := &ExecutionResult{
-		ExitCode: cmd.ProcessState.ExitCode(),
-		Success:  err == nil,
-	}
-
+	// 1. Get the underlying provider tool from the registry.
+	providerTool, err := GetTool(t.Config.Provider)
 	if err != nil {
-		result.Error = err.Error()
+		return nil, fmt.Errorf("failed to get codex provider '%s': %w", t.Config.Provider, err)
+	}
+
+	// 2. Combine the codex system prompt with the user's prompt.
+	fullPrompt := fmt.Sprintf("%s\n\n--- Prompt ---\n\n%s", codexSystemPrompt, ctx.Prompt)
+
+	// 3. Create a new execution context for the underlying tool.
+	providerCtx := ExecutionContext{
+		Prompt:  fullPrompt,
+		WorkDir: ctx.WorkDir,
+		Env:     ctx.Env,
+		// Pass the model to the provider via Args, a common pattern.
+		Args: []string{t.Config.Model},
+	}
+
+	// 4. Delegate execution to the provider tool.
+	result, err := providerTool.Execute(providerCtx)
+	if err != nil {
+		return nil, fmt.Errorf("codex execution via provider '%s' failed: %w", t.Config.Provider, err)
 	}
 
 	return result, nil
-}
-
-// ExecuteNonInteractive runs Codex and captures output
-func (t *CodexTool) ExecuteNonInteractive(ctx ExecutionContext) (*ExecutionResult, error) {
-	prompt := ctx.Prompt
-	if prompt == "" {
-		prompt = t.getPhasePrompt(ctx.Phase)
-	}
-
-	args := []string{}
-	if prompt != "" {
-		args = append(args, prompt)
-	}
-	args = append(args, ctx.Args...)
-
-	cmd := exec.Command(t.command, args...)
-
-	var stdout, stderr bytes.Buffer
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
-
-	err := cmd.Run()
-
-	result := &ExecutionResult{
-		Output:   stdout.String(),
-		Error:    stderr.String(),
-		ExitCode: cmd.ProcessState.ExitCode(),
-		Success:  err == nil,
-	}
-
-	return result, nil
-}
-
-func (t *CodexTool) getPhasePrompt(phase string) string {
-	prompts := map[string]string{
-		"implementation": `You are helping with the implementation phase of a software project.
-
-Tasks:
-1. Implement features based on the design specifications
-2. Write clean, maintainable code following best practices
-3. Add appropriate error handling and logging
-4. Create unit tests for new functionality
-
-Review the project context and help implement the planned features.`,
-	}
-
-	if p, ok := prompts[phase]; ok {
-		return p
-	}
-	return ""
 }

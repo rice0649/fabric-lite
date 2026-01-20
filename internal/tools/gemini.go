@@ -17,7 +17,7 @@ func NewGeminiTool() *GeminiTool {
 	return &GeminiTool{
 		BaseTool: BaseTool{
 			name:        "gemini",
-			description: "Google Gemini CLI - Research and discovery with 1M context window",
+			description: "The Researcher/Reviewer. Expert in discovery, validation, and proposal review, grounded by Google Search.",
 			command:     "gemini",
 		},
 	}

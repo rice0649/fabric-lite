@@ -1,0 +1,42 @@
+{
+  "settings": {
+    "theme": "dark",
+    "auto_save": true,
+    "line_numbers": true,
+    "tab_size": 4,
+    "word_wrap": false,
+    "auto_complete": true,
+    "syntax_highlighting": true,
+    "show_whitespace": false,
+    "indent_guides": true,
+    "minimap": true,
+    "font_size": 14,
+    "font_family": "JetBrains Mono, Fira Code, monospace"
+  },
+  "keybindings": {
+    "save": "Ctrl+S",
+    "open": "Ctrl+O",
+    "find": "Ctrl+F",
+    "replace": "Ctrl+H",
+    "quit": "Ctrl+Q",
+    "toggle_terminal": "Ctrl+`",
+    "toggle_file_explorer": "Ctrl+B"
+  },
+  "plugins": {
+    "enabled": [],
+    "disabled": []
+  },
+  "extensions": {
+    "auto_update": true,
+    "marketplace_url": "https://marketplace.opencode.ai"
+  },
+  "ai": {
+    "provider": "ollama",
+    "model": "llama3:latest",
+    "base_url": "http://LAPTOP_IP:11434",
+    "api_key": "",
+    "temperature": 0.7,
+    "max_tokens": 4096,
+    "timeout": 60000
+  }
+}

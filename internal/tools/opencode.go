@@ -17,7 +17,7 @@ func NewOpenCodeTool() *OpenCodeTool {
 	return &OpenCodeTool{
 		BaseTool: BaseTool{
 			name:        "opencode",
-			description: "OpenCode - Provider-agnostic planning and architecture exploration",
+			description: "The Master Planner and Orchestrator. A meta-tool for creating comprehensive, multi-phase development plans.",
 			command:     "opencode",
 		},
 	}

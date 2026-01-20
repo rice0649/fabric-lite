@@ -1,0 +1,23 @@
+# fabric-lite providers configuration
+# Copy this to ~/.config/fabric-lite/providers.yaml
+
+providers:
+  - name: "openai"
+    type: "http"
+    config:
+      api_key_env: "OPENAI_API_KEY"
+      endpoint: "https://api.openai.com/v1/chat/completions"
+      model: "gpt-4o-mini"
+      
+  - name: "anthropic"
+    type: "anthropic"
+    config:
+      api_key_env: "ANTHROPIC_API_KEY"
+      endpoint: "https://api.anthropic.com/v1/messages"
+      model: "claude-3-5-sonnet-20241022"
+      
+  - name: "ollama"
+    type: "ollama"
+    config:
+      endpoint: "http://localhost:11434"
+      model: "llama3.2"

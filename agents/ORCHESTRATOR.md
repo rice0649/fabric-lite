@@ -1,8 +1,8 @@
-# Multi-Agent Orchestration System
+# Multi-Agent Orchestration System - Your Augmented "Sleeve"
 
 ## Overview
 
-This system runs multiple specialized agents in separate terminal sessions, communicating via shared files.
+This system operates as your augmented "sleeve," a high-performance shell designed to execute your intent. It functions by first "sleeving" your core "consciousness" (your mission, goals, and workflow preferences - your "stack") from the `SHARED_CONTEXT.md` file. It then runs multiple specialized AI agents ("constructs") in separate terminal sessions, communicating via shared files to augment your capabilities.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
@@ -81,6 +81,17 @@ next: next_agent_name (or "none")
 ---
 ```
 
+## Tool Specializations
+
+Within this multi-agent system, specific AI tools ("constructs") are delegated tasks based on their unique strengths, ensuring efficient and high-quality outcomes.
+
+*   **`OpenCode` (Master Planner):** Focuses on breaking down high-level objectives into clear, actionable, multi-phase plans. It orchestrates the overall development strategy.
+*   **`Codex` (Code Generation Specialist):** Dedicated to translating detailed plans into functional code. It handles code writing, refactoring, and in-depth code analysis.
+*   **`Claude` (Systems Architect):** Excels at complex, large-scale code analysis, architectural design, and ensuring structural integrity across large codebases.
+*   **`Gemini` (Researcher & Reviewer):** Specializes in discovery, external research (grounded by Google Search), and critical review of proposals, plans, and implementations against best practices.
+*   **`Ollama` (Quick Task Automator):** Designed for rapid execution of simple, well-defined tasks such as boilerplate generation, formatting, or quick checks, offloading simpler work from more powerful constructs.
+
+
 ## Running the System
 
 ### Terminal 1: Pattern Discovery
@@ -112,11 +123,11 @@ cat agents/outputs/*.md | grep "^status:"
 
 ## Agent Responsibilities
 
-| Agent | Input | Output | Terminal |
-|-------|-------|--------|----------|
-| Pattern Discovery | Original Fabric patterns | patterns_discovered.md, queue | 1 |
-| Planning | Fabric codebase | 01_planning.md | 2 |
-| Review | Planning output | 02_review.md | 2 |
-| Code Analysis | Fabric source files | 03_code_analysis.md | 2 |
-| Final Review | All outputs | 04_final_spec.md, FINAL_SUMMARY.md | 2 |
-| Implementation | Final spec + patterns | Code changes | 3 |
+| Agent | Input | Output | Primary Tools Utilized | Terminal |
+|-------|-------|--------|------------------------|----------|
+| Pattern Discovery | Original Fabric patterns | patterns_discovered.md, queue | Gemini (for research and categorization) | 1 |
+| Planning | User goals, SHARED_CONTEXT.md | 01_planning.md | OpenCode (master planning), Gemini (initial research) | 2 |
+| Review | Planning output, Code Analysis | 02_review.md | Gemini (validation, best practices), Claude (architectural consistency) | 2 |
+| Code Analysis | Fabric source files | 03_code_analysis.md | Codex (deep code review), Claude (large-scale analysis) | 2 |
+| Final Review | All outputs | 04_final_spec.md, FINAL_SUMMARY.md | Gemini (final synthesis), Claude (comprehensive check) | 2 |
+| Implementation | Final spec + patterns | Code changes | Codex (code generation), Claude (complex refactoring), Ollama (boilerplate) | 3 |
