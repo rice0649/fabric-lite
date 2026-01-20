@@ -104,4 +104,6 @@ func init() {
 	RegisterTool(NewCodexTool())
 	RegisterTool(NewOpenCodeTool())
 	RegisterTool(NewFabricTool())
+	RegisterTool(NewClaudeTool())
+	RegisterTool(NewOllamaTool())
 }

@@ -22,6 +22,8 @@ type ToolsConfig struct {
 	Codex    CodexConfig    `yaml:"codex"`
 	OpenCode OpenCodeConfig `yaml:"opencode"`
 	Fabric   FabricConfig   `yaml:"fabric"`
+	Claude   ClaudeConfig   `yaml:"claude"`
+	Ollama   OllamaConfig   `yaml:"ollama"`
 }
 
 type GeminiConfig struct {
@@ -48,6 +50,20 @@ type FabricConfig struct {
 	Enabled     bool   `yaml:"enabled"`
 }
 
+type ClaudeConfig struct {
+	Model      string `yaml:"model,omitempty"`
+	APIKey     string `yaml:"api_key,omitempty"`     // Usually from ANTHROPIC_API_KEY env
+	APIKeyEnv  string `yaml:"api_key_env,omitempty"` // Env var name for API key
+	MaxTokens  int    `yaml:"max_tokens,omitempty"`
+	Enabled    bool   `yaml:"enabled"`
+}
+
+type OllamaConfig struct {
+	Model    string `yaml:"model,omitempty"`
+	Endpoint string `yaml:"endpoint,omitempty"` // Default: http://localhost:11434
+	Enabled  bool   `yaml:"enabled"`
+}
+
 // NewProjectConfig creates a new project configuration
 func NewProjectConfig(name, template string) *ProjectConfig {
 	return &ProjectConfig{
@@ -71,6 +87,17 @@ func NewProjectConfig(name, template string) *ProjectConfig {
 			Fabric: FabricConfig{
 				Model:   "gpt-4o-mini",
 				Enabled: true,
+			},
+			Claude: ClaudeConfig{
+				Model:     "claude-sonnet-4-20250514",
+				APIKeyEnv: "ANTHROPIC_API_KEY",
+				MaxTokens: 4096,
+				Enabled:   false, // Disabled by default, user must enable
+			},
+			Ollama: OllamaConfig{
+				Model:    "llama3.2",
+				Endpoint: "http://localhost:11434",
+				Enabled:  false, // Disabled by default, user must enable
 			},
 		},
 	}
