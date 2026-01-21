@@ -42,6 +42,13 @@ func NewRootCmd(version string) *cobra.Command {
 	rootCmd.AddCommand(newConfigCmd())
 	rootCmd.AddCommand(newVersionCmd(version))
 
+	// Add forge workflow commands
+	rootCmd.AddCommand(newInitCmd())
+	rootCmd.AddCommand(newPhaseCmd())
+	rootCmd.AddCommand(newStatusCmd())
+	rootCmd.AddCommand(newSessionCmd())
+	rootCmd.AddCommand(newAutoCmd())
+
 	return rootCmd
 }
 

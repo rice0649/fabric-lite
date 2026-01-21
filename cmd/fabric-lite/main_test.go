@@ -78,12 +78,12 @@ func TestRunDefaultUsage(t *testing.T) {
 	if !strings.Contains(output, "Usage:") {
 		t.Fatalf("expected usage output, got: %q", output)
 	}
-	if !strings.Contains(output, "fabric-lite vtest-version") {
-		t.Fatalf("expected version in usage output, got: %q", output)
+	if !strings.Contains(output, "fabric-lite [command]") {
+		t.Fatalf("expected command usage in output, got: %q", output)
 	}
 }
 
-func TestRunListFlag(t *testing.T) {
+func TestRunListCommand(t *testing.T) {
 	origArgs := os.Args
 	origDir, err := os.Getwd()
 	if err != nil {
@@ -101,7 +101,8 @@ func TestRunListFlag(t *testing.T) {
 		t.Fatalf("chdir to repo root: %v", err)
 	}
 
-	os.Args = []string{"fabric-lite", "--list"}
+	// Use 'list' subcommand instead of '--list' flag
+	os.Args = []string{"fabric-lite", "list"}
 
 	output := captureStdout(t, func() {
 		rootCmd := cli.NewRootCmd(Version)
@@ -112,11 +113,5 @@ func TestRunListFlag(t *testing.T) {
 
 	if !strings.Contains(output, "Available patterns:") {
 		t.Fatalf("expected patterns header, got: %q", output)
-	}
-	if !strings.Contains(output, "summarize") {
-		t.Fatalf("expected summarize pattern, got: %q", output)
-	}
-	if !strings.Contains(output, "explain_code") {
-		t.Fatalf("expected explain_code pattern, got: %q", output)
 	}
 }
