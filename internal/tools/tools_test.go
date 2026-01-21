@@ -413,10 +413,14 @@ func TestCodexToolExecuteWithMissingProvider(t *testing.T) {
 	tempDir := t.TempDir()
 	tempConfigFile := filepath.Join(tempDir, "config.yaml")
 
-	mockConfig := &providers.Config{
-		DefaultProvider: "nonexistent-provider", // This provider won't exist
-		Providers: []providers.ProviderConfig{}, // No providers defined
-	}
+	mockConfig := core.NewProjectConfig("test-project-missing", "")
+	mockConfig.Tools.Codex.Enabled = true
+	mockConfig.Tools.Codex.Provider = "nonexistent-provider" // This will cause the failure
+	// Ensure at least one provider is enabled in ProjectConfig so ProviderManager initializes
+	mockConfig.Tools.Ollama.Enabled = true 
+	mockConfig.Tools.Ollama.Model = "llama3:latest"
+	mockConfig.Tools.Ollama.Endpoint = "http://localhost:11434"
+
 	configData, err := yaml.Marshal(mockConfig)
 	if err != nil {
 		t.Fatalf("Failed to marshal mock config: %v", err)
