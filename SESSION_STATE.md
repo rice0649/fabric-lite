@@ -1,101 +1,100 @@
-# Fabric-Lite CLI - Session State
+# Fabric-Lite Session State
 
-**Last Updated**: 2026-01-20T18:30:00Z
-**Status**: **ACTIVE DEVELOPMENT** - Core implementation complete, testing and refinement phase
+**Last Updated**: 2026-01-20T19:15:00Z
+**Status**: Sprint 1 COMPLETE - Ready for Sprint 2
 
-## Current Project State
+---
 
-### Core Implementation Status
+## Resume Prompt
 
-| Component | Status | Location |
-|-----------|--------|----------|
-| **CLI (Cobra)** | Complete | `cmd/fabric-lite/main.go` |
-| **Provider Interface** | Complete | `internal/providers/provider.go` |
-| **HTTP Provider** | Complete | `internal/providers/http_provider.go` |
-| **Anthropic Provider** | Complete | `internal/providers/anthropic_provider.go` |
-| **Ollama Provider** | Complete | `internal/providers/ollama_provider.go` |
-| **Executable Provider** | Complete | `internal/providers/executable_provider.go` |
-| **Pattern Executor** | Complete | `internal/executor/pattern.go` |
-| **Config System** | Complete | `internal/providers/config.go`, `internal/core/config.go` |
+```
+Resume fabric-lite development. Sprint 1 is complete (CLI commands wired, tests fixed).
+
+Start Sprint 2:
+1. Implement ClaudeTool.Execute() in internal/tools/claude.go (currently a stub)
+2. Fix Codex config loading in internal/tools/codex.go:36 (has TODO)
+
+See NEXT_STEPS.md for full implementation plan.
+```
+
+---
+
+## Completed Work
+
+### Sprint 1 (DONE)
+- [x] Wired 5 missing CLI commands in `internal/cli/root.go`
+  - init, phase, status, session, auto
+- [x] Fixed failing test `TestRunListCommand`
+- [x] Fixed `TestRunDefaultUsage`
+- [x] All tests passing
+- [x] Commit: `cc4df8b`
+
+---
+
+## Current State
 
 ### CLI Commands Available
-
-```bash
-fabric-lite run      # Execute a pattern against input
-fabric-lite list     # List available patterns
-fabric-lite config   # Show configuration
-fabric-lite version  # Show version information
+```
+fabric-lite
+├── run         # Execute pattern or tool
+├── list        # List available patterns
+├── config      # Show configuration
+├── version     # Show version
+├── init        # Initialize forge project (NEW)
+├── phase       # Manage development phases (NEW)
+├── status      # Project status dashboard (NEW)
+├── session     # Session state management (NEW)
+└── auto        # Automated phase execution (NEW)
 ```
 
-### Tool Integrations (6-Tool Ecosystem)
+### Code Gaps (from Codex analysis)
 
-| Tool | File | Description |
-|------|------|-------------|
-| **gemini** | `internal/tools/gemini.go` | Research/discovery via Google Gemini CLI |
-| **claude** | `internal/tools/claude.go` | Advanced reasoning via Claude CLI |
-| **codex** | `internal/tools/codex.go` | Code generation and analysis |
-| **opencode** | `internal/tools/opencode.go` | Interactive coding assistant |
-| **ollama** | `internal/tools/ollama.go` | Local LLM processing |
-| **fabric** | `internal/tools/fabric.go` | Pattern execution (core) |
+| File | Issue | Priority |
+|------|-------|----------|
+| `internal/tools/claude.go:20` | Stub - returns "not implemented" | HIGH |
+| `internal/tools/codex.go:36` | TODO: config loading hardcoded | HIGH |
+| `internal/executor/pattern.go:183` | TODO: streaming not implemented | MEDIUM |
 
-### Project Structure
+### Test Status
+- `cmd/fabric-lite`: 3/3 tests passing
+- Other packages: 0% coverage (no test files)
+
+---
+
+## Next Sprints
+
+### Sprint 2: Tool Completion (NEXT)
+- [ ] Implement `ClaudeTool.Execute()` - wrap claude CLI like GeminiTool
+- [ ] Fix Codex config loading from `core.LoadConfig()`
+
+### Sprint 3: Streaming Support
+- [ ] Implement streaming in `internal/executor/pattern.go`
+- [ ] Add SSE output support
+
+### Sprint 4: Test Coverage
+- [ ] Add unit tests for providers
+- [ ] Add unit tests for tools
+- [ ] Target 60%+ coverage
+
+---
+
+## Key Files
+
+| Purpose | Location |
+|---------|----------|
+| CLI entry | `cmd/fabric-lite/main.go` |
+| CLI commands | `internal/cli/root.go` |
+| Claude tool (stub) | `internal/tools/claude.go` |
+| Codex tool | `internal/tools/codex.go` |
+| Gemini tool (reference) | `internal/tools/gemini.go` |
+| Implementation plan | `NEXT_STEPS.md` |
+
+---
+
+## Git Status
 
 ```
-fabric-lite/
-├── cmd/
-│   ├── fabric-lite/main.go    # Main CLI entry point
-│   └── forge/main.go          # Forge orchestration entry
-├── internal/
-│   ├── cli/                   # CLI commands (root, init, phase, session, etc.)
-│   ├── core/                  # Core logic (config, state, checkpoint, auto_runner)
-│   ├── executor/              # Pattern execution engine
-│   ├── providers/             # AI provider implementations
-│   └── tools/                 # External tool wrappers
-├── patterns/                  # Fabric patterns library
-├── scripts/                   # Utility scripts (adhd_daemon.sh)
-├── tools/                     # Python utilities (youtube_analyzer.py)
-└── user_context/              # User session data and workflows
-```
-
-### Build Status
-
-- **Go Build**: Compiles successfully
-- **Binary**: `./fabric-lite` (12.7MB)
-- **Test Coverage**: Available in `coverage.out`
-
-## Recent Changes (Uncommitted)
-
-| File | Change Type | Description |
-|------|-------------|-------------|
-| `ENHANCED_CODEX_V2.go` | Deleted | Removed unused enhanced codex file |
-| `internal/cli/init.go` | Modified | Minor refinements |
-| `internal/cli/init_questions.go` | Modified | Updated init questions |
-| `internal/core/config.go` | Modified | Config improvements |
-| `internal/core/state.go` | Modified | State management updates |
-| `internal/tools/claude.go` | Modified | Claude tool fixes |
-| `scripts/adhd_daemon.sh` | Simplified | Production reliability improvements |
-| `tools/youtube_analyzer.py` | Simplified | Streamlined analyzer |
-| `user_context/persona_creation_workflow.sh` | Added | New persona workflow |
-
-## Next Steps
-
-1. **Commit recent changes** - Clean up and commit the simplification work
-2. **End-to-end testing** - Verify all 6 tools work correctly
-3. **Phase 2 features** - Streaming, sessions, variable substitution (if needed)
-4. **Documentation** - Update README and user guides as needed
-
-## Quick Start
-
-```bash
-# Build
-go build -o fabric-lite ./cmd/fabric-lite
-
-# Run a pattern
-echo "Your text here" | ./fabric-lite run --pattern summarize --provider openai
-
-# List patterns
-./fabric-lite list
-
-# Check config
-./fabric-lite config
+Branch: main
+Ahead of origin by: 5 commits
+Latest commit: cc4df8b - Wire missing CLI commands and fix tests
 ```
