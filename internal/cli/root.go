@@ -203,16 +203,43 @@ func executePattern(cmd *cobra.Command, args []string) error {
 	}
 
 	// Initialize executor with provider manager
-	executor := executor.NewPatternExecutor()
+	patternExecutor := executor.NewPatternExecutor()
 
 	// Load specific provider into executor
 	provider, err := providerManager.Get(providerName)
 	if err != nil {
 		return fmt.Errorf("failed to get provider %s: %w", providerName, err)
 	}
-	executor.LoadProviderDirect(providerName, provider)
+	patternExecutor.LoadProviderDirect(providerName, provider)
 
-	response, err := executor.Execute(cmd.Context(), patternName, input, providerName)
+	// Get model from flags
+	model := cmd.Flag("model").Value.String()
+	if model == "" {
+		model = viper.GetString("model")
+	}
+
+	// Check if streaming is enabled
+	streamFlag, _ := cmd.Flags().GetBool("stream")
+	if streamFlag {
+		// Use streaming execution
+		chunks, err := patternExecutor.ExecuteStream(cmd.Context(), patternName, input, providerName, model)
+		if err != nil {
+			return fmt.Errorf("failed to execute pattern: %w", err)
+		}
+
+		// Print chunks as they arrive
+		for chunk := range chunks {
+			if chunk.Error != nil {
+				return fmt.Errorf("streaming error: %w", chunk.Error)
+			}
+			fmt.Print(chunk.Content)
+		}
+		fmt.Println() // Final newline
+		return nil
+	}
+
+	// Non-streaming execution
+	response, err := patternExecutor.Execute(cmd.Context(), patternName, input, providerName)
 	if err != nil {
 		return fmt.Errorf("failed to execute pattern: %w", err)
 	}

@@ -151,7 +151,37 @@ func extractDescription(content string) string {
 	return "Pattern execution"
 }
 
+// buildRequest creates a CompletionRequest from pattern and input
+func (e *PatternExecutor) buildRequest(pattern *PatternInfo, input, model string, stream bool) providers.CompletionRequest {
+	// Build full prompt
+	fullPrompt := pattern.User
+	if fullPrompt != "" {
+		fullPrompt = pattern.User + "\n\nInput:\n" + input
+	} else {
+		fullPrompt = input
+	}
+
+	// Use provided model or default
+	if model == "" {
+		model = "gpt-4o-mini"
+	}
+
+	return providers.CompletionRequest{
+		System:    pattern.System,
+		Prompt:    fullPrompt,
+		Model:     model,
+		Stream:    stream,
+		MaxTokens: 4096,
+	}
+}
+
+// Execute runs a pattern with the specified provider (non-streaming)
 func (e *PatternExecutor) Execute(ctx context.Context, patternName, input, providerName string) (*providers.CompletionResponse, error) {
+	return e.ExecuteWithOptions(ctx, patternName, input, providerName, "", false)
+}
+
+// ExecuteWithOptions runs a pattern with additional options
+func (e *PatternExecutor) ExecuteWithOptions(ctx context.Context, patternName, input, providerName, model string, stream bool) (*providers.CompletionResponse, error) {
 	// Check if provider is loaded
 	provider, ok := e.providers[providerName]
 	if !ok {
@@ -167,22 +197,31 @@ func (e *PatternExecutor) Execute(ctx context.Context, patternName, input, provi
 		return nil, fmt.Errorf("failed to load pattern %s: %w", patternName, err)
 	}
 
-	// Build full prompt
-	fullPrompt := pattern.User
-	if fullPrompt != "" {
-		fullPrompt = pattern.User + "\n\nInput:\n" + input
-	} else {
-		fullPrompt = input
-	}
-
-	// Execute with provider
-	request := providers.CompletionRequest{
-		System:    pattern.System,
-		Prompt:    fullPrompt,
-		Model:     "gpt-4o-mini", // Default model for now
-		Stream:    false,         // TODO: Add streaming support
-		MaxTokens: 4096,
-	}
+	// Build request
+	request := e.buildRequest(pattern, input, model, false)
 
 	return provider.Execute(ctx, request)
+}
+
+// ExecuteStream runs a pattern with streaming output
+func (e *PatternExecutor) ExecuteStream(ctx context.Context, patternName, input, providerName, model string) (<-chan providers.StreamChunk, error) {
+	// Check if provider is loaded
+	provider, ok := e.providers[providerName]
+	if !ok {
+		return nil, fmt.Errorf("provider not loaded: %s", providerName)
+	}
+	if !provider.IsAvailable() {
+		return nil, fmt.Errorf("provider not available: %s", providerName)
+	}
+
+	// Load pattern
+	pattern, err := e.loadPattern(patternName)
+	if err != nil {
+		return nil, fmt.Errorf("failed to load pattern %s: %w", patternName, err)
+	}
+
+	// Build request with streaming enabled
+	request := e.buildRequest(pattern, input, model, true)
+
+	return provider.ExecuteStream(ctx, request)
 }
