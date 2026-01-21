@@ -1,19 +1,20 @@
 # Fabric-Lite Session State
 
-**Last Updated**: 2026-01-20T19:30:00Z
-**Status**: Sprint 2 COMPLETE - Ready for Sprint 3
+**Last Updated**: 2026-01-20T19:45:00Z
+**Status**: Sprint 3 COMPLETE - Ready for Sprint 4
 
 ---
 
 ## Resume Prompt
 
 ```
-Resume fabric-lite development. Sprints 1-2 complete.
+Resume fabric-lite development. Sprints 1-3 complete.
 
-Start Sprint 3 - Streaming Support:
-1. Implement streaming in internal/executor/pattern.go:183 (has TODO)
-2. Add SSE output support for real-time responses
-3. Wire --stream flag to streaming execution path
+Start Sprint 4 - Test Coverage:
+1. Add unit tests for providers (internal/providers/)
+2. Add unit tests for tools (internal/tools/)
+3. Add unit tests for executor (internal/executor/)
+4. Target 60%+ coverage
 
 See NEXT_STEPS.md for full implementation plan.
 ```
@@ -31,8 +32,13 @@ See NEXT_STEPS.md for full implementation plan.
 - [x] Implemented ClaudeTool.Execute() with CLI wrapper
 - [x] Added ExecuteNonInteractive() for headless mode
 - [x] Fixed Codex config loading from .forge/config.yaml
-- [x] Added config fallback chain (project -> home -> defaults)
 - [x] Commit: `dbe14af`
+
+### Sprint 3 (DONE)
+- [x] Added ExecuteStream() to pattern executor
+- [x] Wired --stream flag to streaming path in CLI
+- [x] Real-time chunk output to stdout
+- [x] Commit: `43a1540`
 
 ---
 
@@ -58,7 +64,7 @@ fabric-lite
 |------|-------|----------|--------|
 | `internal/tools/claude.go:20` | Stub - returns "not implemented" | HIGH | FIXED |
 | `internal/tools/codex.go:36` | TODO: config loading hardcoded | HIGH | FIXED |
-| `internal/executor/pattern.go:183` | TODO: streaming not implemented | MEDIUM | PENDING |
+| `internal/executor/pattern.go:183` | TODO: streaming not implemented | MEDIUM | FIXED |
 
 ### Test Status
 - `cmd/fabric-lite`: 3/3 tests passing
@@ -72,12 +78,12 @@ fabric-lite
 - [x] Implement `ClaudeTool.Execute()` - wrap claude CLI like GeminiTool
 - [x] Fix Codex config loading from `core.LoadConfig()`
 
-### Sprint 3: Streaming Support (NEXT)
-- [ ] Implement streaming in `internal/executor/pattern.go`
-- [ ] Add SSE output support
-- [ ] Wire --stream flag to streaming path
+### Sprint 3: Streaming Support (DONE)
+- [x] Implement streaming in `internal/executor/pattern.go`
+- [x] Add SSE output support
+- [x] Wire --stream flag to streaming path
 
-### Sprint 4: Test Coverage
+### Sprint 4: Test Coverage (NEXT)
 - [ ] Add unit tests for providers
 - [ ] Add unit tests for tools
 - [ ] Target 60%+ coverage
@@ -101,6 +107,6 @@ fabric-lite
 
 ```
 Branch: main
-Ahead of origin by: 7 commits
-Latest commit: dbe14af - Implement ClaudeTool and fix Codex config loading (Sprint 2)
+Ahead of origin by: 9 commits
+Latest commit: 43a1540 - Add streaming support to pattern executor (Sprint 3)
 ```
