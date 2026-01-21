@@ -2,6 +2,9 @@ package tools
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
+
 	"github.com/rice0649/fabric-lite/internal/core"
 )
 
@@ -24,19 +27,44 @@ func NewCodexTool() *CodexTool {
 }
 
 // IsAvailable checks if the tool is enabled in the config.
-// A more robust check would verify if its configured provider is available.
 func (t *CodexTool) IsAvailable() bool {
-	// For now, we assume it's available if we can load its config.
-	// This will be improved when config loading is implemented.
-	return true
+	t.loadConfig()
+	return t.Config.Enabled
+}
+
+// loadConfig loads the codex configuration from project config or uses defaults
+func (t *CodexTool) loadConfig() {
+	// Try to load from .forge/config.yaml first
+	configPath := filepath.Join(".forge", "config.yaml")
+	if cfg, err := core.LoadProjectConfig(configPath); err == nil {
+		t.Config = cfg.Tools.Codex
+		return
+	}
+
+	// Try home config directory
+	homeDir, _ := os.UserHomeDir()
+	if homeDir != "" {
+		configPath = filepath.Join(homeDir, ".config", "fabric-lite", "config.yaml")
+		if cfg, err := core.LoadProjectConfig(configPath); err == nil {
+			t.Config = cfg.Tools.Codex
+			return
+		}
+	}
+
+	// Use sensible defaults if no config found
+	t.Config = core.CodexConfig{
+		Provider: "ollama",       // Default to local ollama
+		Model:    "llama3:latest",
+		Enabled:  true,
+	}
 }
 
 // Execute runs the codex meta-tool. It's headless by nature.
 func (t *CodexTool) Execute(ctx ExecutionContext) (*ExecutionResult, error) {
-	// TODO: Replace this with actual config loading once implemented.
-	// For now, we'll simulate the config to use Ollama.
-	t.Config.Provider = "ollama"
-	t.Config.Model = "llama3:latest"
+	// Load config if not already loaded
+	if t.Config.Provider == "" {
+		t.loadConfig()
+	}
 
 	if t.Config.Provider == "" {
 		return nil, fmt.Errorf("codex tool requires a provider (e.g., ollama, gemini) to be configured")
@@ -56,8 +84,14 @@ func (t *CodexTool) Execute(ctx ExecutionContext) (*ExecutionResult, error) {
 		Prompt:  fullPrompt,
 		WorkDir: ctx.WorkDir,
 		Env:     ctx.Env,
-		// Pass the model to the provider via Args, a common pattern.
-		Args: []string{t.Config.Model},
+		Phase:   ctx.Phase,
+		// Pass the model to the provider via Args if specified
+		Args: ctx.Args,
+	}
+
+	// Add model to args if configured
+	if t.Config.Model != "" {
+		providerCtx.Args = append([]string{"--model", t.Config.Model}, providerCtx.Args...)
 	}
 
 	// 4. Delegate execution to the provider tool.
