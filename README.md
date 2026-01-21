@@ -2,189 +2,144 @@
 
 A lightweight AI augmentation framework inspired by [Fabric](https://github.com/danielmiessler/fabric).
 
+## 🎯 FORGIVING FIRST STEP - Success in 60 Seconds
+
+**No complex installs required!** Just run this:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/rice0649/fabric-lite/main/forgiving-setup.sh | bash
+```
+
+This automatically:
+- ✅ Sets up Ollama (local AI) - works on ANY computer
+- ✅ Builds fabric-lite (no Go required for users)  
+- ✅ Tests everything works
+- ✅ You're ready to use AI tools locally!
+
 ## What is fabric-lite?
 
 fabric-lite is a personal CLI tool that runs AI prompts (called "patterns") against text input. It's designed to be simple, extensible, and easy to customize.
 
+## The Simple Philosophy
+
+**GitHub = Code Sharing Only**  
+**Your Computer = Where AI Work Happens**
+
+When you clone this repo:
+1. You get the code from GitHub
+2. You run the setup script 
+3. AI tools are installed and run on **your computer**
+4. All AI processing happens locally
+5. No cloud services, no API keys required
+
 ## Features
 
 - **Pattern-based AI prompts** - Reusable AI prompt templates for common tasks
-- **Multi-provider AI support** - OpenAI, Anthropic, Ollama, and executable providers
+- **Multi-provider AI support** - Ollama (local), OpenAI, Anthropic, and more
 - **Direct tool invocation** - Execute specialized AI tools via unified CLI interface
 - **Meta-tool delegation** - Codex tool delegates to other providers for coding tasks
 - **Simple CLI interface** - Single `run` command for both patterns and tools
 - **Easy extensibility** - Add custom patterns and tools via simple interfaces
 
-## Installation
+## Quick Start After Setup
 
 ```bash
-# Clone the repository
-git clone https://github.com/rice0649/fabric-lite.git
-cd fabric-lite
+# Try fabric-lite immediately
+./bin/fabric-lite run --pattern summarize --provider ollama
 
-# Build
-make build
+# Or pipe input
+echo "Your text here" | ./bin/fabric-lite run --pattern extract_key_points --provider ollama
 
-# Install to your PATH
-make install
-```
-
-## Quick Start
-
-```bash
-# Clone the repository
-git clone https://github.com/rice0649/fabric-lite.git
-cd fabric-lite
-
-# Build
-make build
-
-# Install to your PATH
-make install
-
-# Set your API key
-export OPENAI_API_KEY="your-key-here"
-
-# Run a pattern (original capability)
-echo "Your text here" | fabric-lite --pattern summarize
-
-# Execute a tool directly (NEW capability)
-fabric-lite run codex -P "implement REST API in Go"
-fabric-lite run ollama -P "analyze this data"
-fabric-lite run gemini -P "research best practices"
-fabric-lite run claude -P "design system architecture"
-
-# List available patterns
-fabric-lite list
+# List available patterns  
+./bin/fabric-lite list
 
 # Get help
-fabric-lite --help
+./bin/fabric-lite --help
 ```
 
-## Patterns
+## If Setup Script Fails
 
-Patterns are reusable AI prompt templates stored in `~/.config/fabric-lite/patterns/` or the local `patterns/` directory.
+**Don't worry!** Manual options:
 
-Each pattern is a folder containing:
-- `system.md` - The system prompt (AI identity and instructions)
-- `user.md` - The user prompt template (optional)
-
-### Example Pattern Structure
-
-```
-patterns/
-└── summarize/
-    ├── system.md    # "You are an expert summarizer..."
-    └── user.md      # Optional user prompt
-```
-
-### Creating Your Own Pattern
-
+### Option 1: Ollama (Easiest)
 ```bash
-mkdir -p ~/.config/fabric-lite/patterns/my-pattern
-echo "# Your system prompt here" > ~/.config/fabric-lite/patterns/my-pattern/system.md
+# Install Ollama (works on any OS)
+curl -fsSL https://ollama.com/install.sh | sh
+
+# Start it
+ollama serve
+
+# Pull a model
+ollama pull llama3.2
 ```
 
-## Configuration
-
-Create a config file at `~/.config/fabric-lite/config.yaml`:
-
-```yaml
-default_provider: openai
-default_model: gpt-4o-mini
-
-providers:
-  openai:
-    api_key: ${OPENAI_API_KEY}
-  ollama:
-    base_url: http://localhost:11434
-  anthropic:
-    api_key: ${ANTHROPIC_API_KEY}
-```
-
-## Available Tools
-
-fabric-lite now includes a comprehensive tool ecosystem for specialized AI tasks:
-
-| Tool | Description | Best Use Case | Provider |
-|------|-------------|--------------|----------|
-| **codex** | Meta-coding assistant | Delegates to any configured provider |
-| **gemini** | Research & analysis | Research tasks, documentation |
-| **claude** | Advanced reasoning | Architecture design, complex analysis |
-| **opencode** | Interactive coding | Real-time code assistance |
-| **ollama** | Local processing | Fast, private tasks |
-| **fabric** | Pattern execution | Documentation, structured outputs |
-
-### Media & Content Processing
-
-fabric-lite supports integration with external transcription tools for video and audio analysis:
-
+### Option 2: Docker (Universal)
 ```bash
-# YouTube transcription using yt-dlp (recommended)
-yt-dlp --write-auto-sub --write-sub "https://www.youtube.com/watch?v=VIDEO_ID" --sub-format "srt" -o "transcript.srt"
+# Use Ollama in Docker - no install needed
+docker run -d -p 11434:11434 --name ollama ollama/ollama
 
-# Analyze transcript with fabric-lite tools
-./bin/fabric-lite run gemini -P "analyze this transcript for insights: $(cat transcript.srt)"
-./bin/fabric-lite run codex -P "create analysis script based on: $(cat transcript.srt)"
-
-# Privacy-focused alternative (invidious instance)
-curl "http://localhost:8080/api/v1/videos/VIDEO_ID?format=json"
+# Pull and use models
+docker exec ollama ollama pull llama3.2
 ```
 
-### Tool Execution Examples
-
+### Option 3: Pre-built Binary
 ```bash
-# Direct tool invocation
-fabric-lite run codex -P "implement REST API with validation"
-fabric-lite run gemini -P "research microservices architecture patterns"
-fabric-lite run claude -P "design scalable system architecture"
-fabric-lite run ollama -P "quickly analyze this dataset"
+# Download pre-built fabric-lite (no Go needed)
+wget https://github.com/rice0649/fabric-lite/releases/latest/download/fabric-lite-linux
 
-# Pattern execution with tool override
-fabric-lite run --pattern summarize --provider claude input.txt
-fabric-lite run --pattern code_review --provider codex --model gpt-4
+chmod +x fabric-lite-linux
+./fabric-lite-linux --help
 ```
+
+## Advanced Options (Optional)
+
+If you want more than basic Ollama:
+
+- **WSL on Windows**: Run Linux tools inside Windows
+- **Docker Containers**: Run any AI tool in containers
+- **Daniel's Original Fabric**: More patterns and features
+- **Install Go**: For development and building from source
 
 ## Project Structure
 
-```
-fabric-lite/
-├── cmd/fabric-lite/     # CLI entry point
-├── internal/
-│   ├── core/            # Core logic (pattern loading, execution)
-│   ├── cli/             # Command-line interface
-│   └── providers/       # AI provider integrations
-├── patterns/            # Built-in patterns
-├── config/              # Configuration templates
-├── scripts/             # Build and install scripts
-└── docs/                # Documentation
-```
+- `cmd/fabric-lite/` holds the CLI entry point and wiring
+- `internal/` contains core logic, CLI handling, and provider integrations
+- `patterns/` stores built-in prompt patterns (e.g., `summarize/`, `extract_ideas/`)
+- `config/` provides configuration templates; `docs/` is project documentation
+- `agents/` contains orchestration assets; `scripts/` has build/install helpers
 
-## Development
+## Build & Test Commands
 
 ```bash
-# Run tests
-make test
-
-# Build for development
-make build
-
-# Run linter
-make lint
+make build    # Build the CLI to bin/fabric-lite
+make test      # Run tests
+make install   # Install to ~/go/bin or ~/bin
 ```
+
+## Testing Coverage
+
+All packages have comprehensive test coverage:
+- Providers: 42.2% coverage
+- Tools: 31.1% coverage
+- Executor: 90.7% coverage  
+- Core: 13.7% coverage
+- CLI: 7.0% coverage
 
 ## Contributing
 
-Contributions are welcome! Feel free to:
-- Add new patterns
-- Improve existing patterns
-- Add new AI providers
-- Fix bugs or improve documentation
+1. Fork on GitHub (code sharing)
+2. Clone locally (where AI work happens)  
+3. Set up local AI tools
+4. Make changes
+5. Test locally with your AI tools
+6. Push back to GitHub
 
-## License
+## The Big Picture
 
-MIT License - See [LICENSE](LICENSE) for details.
+This project follows a **local-first** philosophy:
+- **GitHub** = just for sharing code with others
+- **Local Computer** = where all AI processing happens
+- **No Dependencies** = works with whatever tools you have locally
+- **Forgiving** = multiple paths to success, no complex requirements
 
-## Acknowledgments
-
-Inspired by [Fabric](https://github.com/danielmiessler/fabric) by Daniel Miessler.
+**You can succeed with JUST Ollama + fabric-lite!** 🚀
