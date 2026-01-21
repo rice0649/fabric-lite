@@ -1,18 +1,19 @@
 # Fabric-Lite Session State
 
-**Last Updated**: 2026-01-20T19:15:00Z
-**Status**: Sprint 1 COMPLETE - Ready for Sprint 2
+**Last Updated**: 2026-01-20T19:30:00Z
+**Status**: Sprint 2 COMPLETE - Ready for Sprint 3
 
 ---
 
 ## Resume Prompt
 
 ```
-Resume fabric-lite development. Sprint 1 is complete (CLI commands wired, tests fixed).
+Resume fabric-lite development. Sprints 1-2 complete.
 
-Start Sprint 2:
-1. Implement ClaudeTool.Execute() in internal/tools/claude.go (currently a stub)
-2. Fix Codex config loading in internal/tools/codex.go:36 (has TODO)
+Start Sprint 3 - Streaming Support:
+1. Implement streaming in internal/executor/pattern.go:183 (has TODO)
+2. Add SSE output support for real-time responses
+3. Wire --stream flag to streaming execution path
 
 See NEXT_STEPS.md for full implementation plan.
 ```
@@ -23,11 +24,15 @@ See NEXT_STEPS.md for full implementation plan.
 
 ### Sprint 1 (DONE)
 - [x] Wired 5 missing CLI commands in `internal/cli/root.go`
-  - init, phase, status, session, auto
-- [x] Fixed failing test `TestRunListCommand`
-- [x] Fixed `TestRunDefaultUsage`
-- [x] All tests passing
+- [x] Fixed failing tests
 - [x] Commit: `cc4df8b`
+
+### Sprint 2 (DONE)
+- [x] Implemented ClaudeTool.Execute() with CLI wrapper
+- [x] Added ExecuteNonInteractive() for headless mode
+- [x] Fixed Codex config loading from .forge/config.yaml
+- [x] Added config fallback chain (project -> home -> defaults)
+- [x] Commit: `dbe14af`
 
 ---
 
@@ -49,11 +54,11 @@ fabric-lite
 
 ### Code Gaps (from Codex analysis)
 
-| File | Issue | Priority |
-|------|-------|----------|
-| `internal/tools/claude.go:20` | Stub - returns "not implemented" | HIGH |
-| `internal/tools/codex.go:36` | TODO: config loading hardcoded | HIGH |
-| `internal/executor/pattern.go:183` | TODO: streaming not implemented | MEDIUM |
+| File | Issue | Priority | Status |
+|------|-------|----------|--------|
+| `internal/tools/claude.go:20` | Stub - returns "not implemented" | HIGH | FIXED |
+| `internal/tools/codex.go:36` | TODO: config loading hardcoded | HIGH | FIXED |
+| `internal/executor/pattern.go:183` | TODO: streaming not implemented | MEDIUM | PENDING |
 
 ### Test Status
 - `cmd/fabric-lite`: 3/3 tests passing
@@ -63,13 +68,14 @@ fabric-lite
 
 ## Next Sprints
 
-### Sprint 2: Tool Completion (NEXT)
-- [ ] Implement `ClaudeTool.Execute()` - wrap claude CLI like GeminiTool
-- [ ] Fix Codex config loading from `core.LoadConfig()`
+### Sprint 2: Tool Completion (DONE)
+- [x] Implement `ClaudeTool.Execute()` - wrap claude CLI like GeminiTool
+- [x] Fix Codex config loading from `core.LoadConfig()`
 
-### Sprint 3: Streaming Support
+### Sprint 3: Streaming Support (NEXT)
 - [ ] Implement streaming in `internal/executor/pattern.go`
 - [ ] Add SSE output support
+- [ ] Wire --stream flag to streaming path
 
 ### Sprint 4: Test Coverage
 - [ ] Add unit tests for providers
@@ -95,6 +101,6 @@ fabric-lite
 
 ```
 Branch: main
-Ahead of origin by: 5 commits
-Latest commit: cc4df8b - Wire missing CLI commands and fix tests
+Ahead of origin by: 7 commits
+Latest commit: dbe14af - Implement ClaudeTool and fix Codex config loading (Sprint 2)
 ```
