@@ -53,21 +53,27 @@ func NewRootCmd(version string) *cobra.Command {
 }
 
 func initConfig() error {
-	viper.SetConfigName("config")
-	viper.SetConfigType("yaml")
-	viper.AddConfigPath("$HOME/.config/fabric-lite")
-	viper.AddConfigPath(".")
+	cm := core.NewConfigManager("")
+	cfg, err := cm.Load()
+	if err != nil {
+		// If config file not found, it's not an error, we'll use defaults.
+		// Other errors should be returned.
+		if _, ok := err.(*os.PathError); !ok && err.Error() != "config file not found" {
+			return fmt.Errorf("failed to load configuration: %w", err)
+		}
+	}
+
+	// Update viper with values from loaded config for CLI flags
+	// Get the default config that was set during cm.Load()
+	loadedConfig := core.GetDefaultConfig()
+	viper.SetDefault("provider", loadedConfig.Tools.Codex.Provider)
+
+	// Attempt to find the model associated with the default provider
+	defaultModel := loadedConfig.Tools.Codex.Model // Use Codex's model as default
+	viper.SetDefault("model", defaultModel)
 
 	viper.AutomaticEnv()
 	viper.SetEnvPrefix("FABRIC_LITE")
-
-	// Read config file if it exists
-	if err := viper.ReadInConfig(); err != nil {
-		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
-			return err
-		}
-		// Config file not found is OK, we'll use defaults
-	}
 
 	return nil
 }
@@ -180,18 +186,9 @@ func executePattern(cmd *cobra.Command, args []string) error {
 		input = buf.String()
 	}
 
-	// Initialize config manager
-	configManager := core.NewConfigManager("")
-	config, err := configManager.Load()
-	if err != nil {
-		return fmt.Errorf("failed to load configuration: %w", err)
-	}
-
-	// Initialize provider manager
-	providerManager := core.NewProviderManager(config)
-	if err := providerManager.InitializeAll(); err != nil {
-		return fmt.Errorf("failed to initialize providers: %w", err)
-	}
+	// Get global config and provider manager
+	config := core.GetDefaultConfig()
+	providerManager := core.GetDefaultProviderManager()
 
 	// Determine provider name
 	providerName := cmd.Flag("provider").Value.String()
@@ -199,7 +196,7 @@ func executePattern(cmd *cobra.Command, args []string) error {
 		providerName = viper.GetString("provider")
 	}
 	if providerName == "" {
-		providerName, _ = configManager.GetDefaultProvider()
+		providerName = config.Tools.Codex.Provider // Use Codex's provider as default
 	}
 
 	// Initialize executor with provider manager
@@ -287,13 +284,10 @@ func showConfig(cmd *cobra.Command, args []string) error {
 	fmt.Printf("  Patterns Dir: %s\n", executor.NewPatternExecutor().GetPatternsDir())
 
 	// Show loaded providers
-	configManager := core.NewConfigManager("")
-	config, err := configManager.Load()
-	if err == nil {
-		fmt.Println("  Available Providers:")
-		for _, provider := range config.Providers {
-			fmt.Printf("    - %s (%s)\n", provider.Name, provider.Type)
-		}
+	config := core.GetDefaultConfig()
+	fmt.Println("  Available Providers:")
+	for _, provider := range config.Providers {
+		fmt.Printf("    - %s (%s)\n", provider.Name, provider.Type)
 	}
 
 	return nil

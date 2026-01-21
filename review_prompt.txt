@@ -1,0 +1,14 @@
+Please provide a comprehensive review of the fabric-lite project covering:
+
+1. Current project state and architecture
+2. Code quality and maintainability 
+3. Feature completeness and functionality
+4. Testing coverage and quality
+5. Documentation and user experience
+6. Performance and scalability considerations
+7. Security best practices implementation
+8. Integration and compatibility with AI tools
+9. Areas for improvement and optimization
+10. Recommendations for next steps and future development
+
+Focus on CLI tool design, provider integration, and user experience. Provide specific, actionable insights for both fabric-lite and forge projects.

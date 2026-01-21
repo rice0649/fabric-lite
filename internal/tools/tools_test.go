@@ -1,9 +1,16 @@
 package tools
 
 import (
+	"context"
 	"os"
 	"strings"
 	"testing"
+	"path/filepath"
+	"gopkg.in/yaml.v3"
+	"time"
+
+	"github.com/rice0649/fabric-lite/internal/core"
+	"github.com/rice0649/fabric-lite/internal/providers"
 )
 
 func TestExecutionContext(t *testing.T) {
@@ -104,6 +111,41 @@ func (m *MockTool) Execute(ctx ExecutionContext) (*ExecutionResult, error) {
 		ExitCode: 0,
 		Success:  true,
 	}, nil
+}
+
+// mockOllamaProvider implements providers.Provider for testing purposes
+type mockOllamaProvider struct {
+	name string
+}
+
+func (m *mockOllamaProvider) Name() string {
+	return m.name
+}
+
+func (m *mockOllamaProvider) Execute(ctx context.Context, request providers.CompletionRequest) (*providers.CompletionResponse, error) {
+	return &providers.CompletionResponse{
+		Content:  "mock Ollama response",
+		Model:    request.Model,
+		Tokens:   10,
+		Duration: 1 * time.Millisecond,
+	}, nil
+}
+
+func (m *mockOllamaProvider) ExecuteStream(ctx context.Context, request providers.CompletionRequest) (<-chan providers.StreamChunk, error) {
+	chunks := make(chan providers.StreamChunk, 1)
+	go func() {
+		defer close(chunks)
+		chunks <- providers.StreamChunk{Content: "mock Ollama stream chunk", Done: true}
+	}()
+	return chunks, nil
+}
+
+func (m *mockOllamaProvider) IsAvailable() bool {
+	return true // Always available for testing
+}
+
+func (m *mockOllamaProvider) GetModels() []string {
+	return []string{"llama3:latest", "llama2"}
 }
 
 func TestToolRegistry(t *testing.T) {
@@ -280,7 +322,17 @@ func TestClaudeToolExecuteNonInteractive(t *testing.T) {
 }
 
 func TestNewCodexTool(t *testing.T) {
-	tool := NewCodexTool()
+	// Mock config for CodexTool
+	mockCodexConfig := core.CodexConfig{
+		Provider: "ollama",
+		Model:    "llama3:latest",
+		Enabled:  true,
+	}
+
+	// Mock ProviderManager (no actual functionality needed for this test)
+	mockProviderManager := core.NewProviderManager(&providers.Config{})
+
+	tool := NewCodexTool(mockCodexConfig, mockProviderManager)
 
 	if tool.Name() != "codex" {
 		t.Errorf("Expected tool name to be 'codex', got %s", tool.Name())
@@ -291,23 +343,43 @@ func TestNewCodexTool(t *testing.T) {
 	}
 }
 
-func TestCodexToolLoadConfig(t *testing.T) {
-	tool := NewCodexTool()
-
-	// Test loading config (should use defaults if no config files exist)
-	tool.loadConfig()
-
-	if tool.Config.Provider == "" {
-		t.Error("Expected provider to be set after loadConfig")
-	}
-
-	if tool.Config.Model == "" {
-		t.Error("Expected model to be set after loadConfig")
-	}
-}
-
 func TestCodexToolExecute(t *testing.T) {
-	tool := NewCodexTool()
+	// Setup: Create a temporary config file for testing
+	tempDir := t.TempDir()
+	tempConfigFile := filepath.Join(tempDir, "config.yaml")
+
+	mockConfig := core.NewProjectConfig("test-project", "")
+	mockConfig.Tools.Codex.Enabled = true
+	mockConfig.Tools.Codex.Provider = "ollama"
+	mockConfig.Tools.Ollama.Enabled = true // Ensure Ollama is enabled for ProviderManager
+	mockConfig.Tools.Ollama.Model = "llama3:latest"
+	mockConfig.Tools.Ollama.Endpoint = "http://localhost:11434"
+
+	configData, err := yaml.Marshal(mockConfig)
+	if err != nil {
+		t.Fatalf("Failed to marshal mock config: %v", err)
+	}
+	if err := os.WriteFile(tempConfigFile, configData, 0644); err != nil {
+		t.Fatalf("Failed to write mock config file: %v", err)
+	}
+
+	cm := core.NewConfigManager(tempConfigFile)
+	cfg, err := cm.Load() // cm.Load now also sets the default ProviderManager
+	if err != nil {
+		t.Fatalf("Failed to load config for test: %v", err)
+	}
+
+	// Register mock Ollama provider
+	mockOllama := &mockOllamaProvider{name: "ollama"}
+	core.GetDefaultProviderManager().AddProvider("ollama", mockOllama)
+
+	// Register tools after config and provider manager are loaded
+	RegisterConfiguredTools(cfg.Tools.Codex, core.GetDefaultProviderManager())
+
+	tool, err := GetTool("codex")
+	if err != nil {
+		t.Fatalf("Failed to get codex tool: %v", err)
+	}
 
 	// Create execution context
 	ctx := ExecutionContext{
@@ -322,7 +394,7 @@ func TestCodexToolExecute(t *testing.T) {
 	// but we can test the structure
 	if err != nil {
 		// Expected if provider is not available
-		if strings.Contains(err.Error(), "failed to get codex provider") {
+		if strings.Contains(err.Error(), "provider not available") {
 			return // Expected failure
 		}
 		t.Errorf("Unexpected error: %v", err)
@@ -337,27 +409,52 @@ func TestCodexToolExecute(t *testing.T) {
 }
 
 func TestCodexToolExecuteWithMissingProvider(t *testing.T) {
-	tool := NewCodexTool()
-
-	// Create a temp dir with no config files to force defaults
+	// Setup: Create a temporary config file with an intentionally missing provider for this test
 	tempDir := t.TempDir()
+	tempConfigFile := filepath.Join(tempDir, "config.yaml")
+
+	mockConfig := &providers.Config{
+		DefaultProvider: "nonexistent-provider", // This provider won't exist
+		Providers: []providers.ProviderConfig{}, // No providers defined
+	}
+	configData, err := yaml.Marshal(mockConfig)
+	if err != nil {
+		t.Fatalf("Failed to marshal mock config: %v", err)
+	}
+	if err := os.WriteFile(tempConfigFile, configData, 0644); err != nil {
+		t.Fatalf("Failed to write mock config file: %v", err)
+	}
+
+	cm := core.NewConfigManager(tempConfigFile)
+	cfg, err := cm.Load() // cm.Load now also sets the default ProviderManager
+	if err != nil {
+		t.Fatalf("Failed to load config for test: %v", err)
+	}
+
+	// Register mock Ollama provider (even though this test uses "nonexistent-provider" for Codex)
+	// This ensures that GetDefaultProviderManager doesn't panic if other parts of the system
+	// (e.g., IsAvailable for other tools) try to access it.
+	mockOllama := &mockOllamaProvider{name: "ollama"}
+	core.GetDefaultProviderManager().AddProvider("ollama", mockOllama)
+
+	// Register tools after config and provider manager are loaded
+	RegisterConfiguredTools(cfg.Tools.Codex, core.GetDefaultProviderManager())
+
+	tool, err := GetTool("codex")
+	if err != nil {
+		t.Fatalf("Failed to get codex tool: %v", err)
+	}
+
 	ctx := ExecutionContext{
 		Prompt:  "Test prompt",
 		WorkDir: tempDir,
 	}
 
-	// Save original HOME and set temp to avoid loading real config
-	originalHome := os.Getenv("HOME")
-	defer os.Setenv("HOME", originalHome)
-	os.Setenv("HOME", tempDir)
+	_, err = tool.Execute(ctx)
 
-	// Execute should work with default provider (ollama), but if ollama is not available
-	// it should return an error from the provider lookup
-	_, err := tool.Execute(ctx)
-
-	// Either success (if ollama is available) or error (if not) is acceptable
-	// The important thing is no panic
-	if err != nil && !strings.Contains(err.Error(), "failed to get codex provider") {
+	if err == nil {
+		t.Error("Expected an error for missing provider, got nil")
+	} else if !strings.Contains(err.Error(), "codex tool is not available (either not enabled or provider 'nonexistent-provider' is not ready)") {
 		t.Errorf("Unexpected error type: %v", err)
 	}
 }
@@ -429,23 +526,22 @@ func TestGeminiToolGetPhasePrompt(t *testing.T) {
 }
 
 func TestNewOllamaTool(t *testing.T) {
-	tool := NewOllamaTool()
+	tool := NewOllamaTool("http://localhost:11434")
 
 	if tool.Name() != "ollama" {
 		t.Errorf("Expected tool name to be 'ollama', got %s", tool.Name())
 	}
-	expectedDesc := "The Quick Task Automator. Runs local models like Llama3 for fast, simple tasks like boilerplate generation and formatting."
+	expectedDesc := "Interact with the Ollama CLI to pull and list models. Requires Ollama to be installed and running."
 	if tool.Description() != expectedDesc {
 		t.Errorf("Expected description to be '%s', got '%s'", expectedDesc, tool.Description())
 	}
-	// Ollama doesn't use an external command
-	if tool.GetCommand() != "" {
-		t.Errorf("Expected command to be empty, got %s", tool.GetCommand())
+	if tool.GetCommand() != "ollama" {
+		t.Errorf("Expected command to be 'ollama', got %s", tool.GetCommand())
 	}
 }
 
 func TestOllamaToolIsAvailable(t *testing.T) {
-	tool := NewOllamaTool()
+	tool := NewOllamaTool("http://localhost:11434")
 
 	// IsAvailable should return a boolean without panicking
 	// The actual result depends on whether Ollama is running

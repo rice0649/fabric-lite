@@ -2,6 +2,7 @@ package core
 
 import (
 	"os"
+	"path/filepath"
 
 	"gopkg.in/yaml.v3"
 )
@@ -14,6 +15,8 @@ type ProjectConfig struct {
 	Version     string            `yaml:"version"`
 	Tools       ToolsConfig       `yaml:"tools"`
 	Phases      map[string]string `yaml:"phases,omitempty"` // phase -> custom tool override
+	Patterns    PatternsConfig    `yaml:"patterns"`
+	Sessions    SessionsConfig    `yaml:"sessions"`
 }
 
 // ToolsConfig holds configuration for AI tools
@@ -64,8 +67,23 @@ type OllamaConfig struct {
 	Enabled  bool   `yaml:"enabled"`
 }
 
+// PatternsConfig configures pattern directories
+type PatternsConfig struct {
+	Directories []string `yaml:"directories"`
+}
+
+// SessionsConfig configures session storage
+type SessionsConfig struct {
+	Directory    string `yaml:"directory"`
+	MaxHistory   int    `yaml:"max_history"`
+	PersistState bool   `yaml:"persist_state"`
+}
+
 // NewProjectConfig creates a new project configuration
 func NewProjectConfig(name, template string) *ProjectConfig {
+	homeDir, _ := os.UserHomeDir()
+	configDir := filepath.Join(homeDir, ".config", "fabric-lite")
+
 	return &ProjectConfig{
 		Name:     name,
 		Template: template,
@@ -76,8 +94,9 @@ func NewProjectConfig(name, template string) *ProjectConfig {
 				Enabled: true,
 			},
 			Codex: CodexConfig{
-				Model:   "o3-mini",
-				Enabled: true,
+				Model:    "o3-mini",
+				Provider: "ollama",
+				Enabled:  true,
 			},
 			OpenCode: OpenCodeConfig{
 				Provider: "anthropic",
@@ -99,6 +118,17 @@ func NewProjectConfig(name, template string) *ProjectConfig {
 				Endpoint: "http://localhost:11434",
 				Enabled:  false, // Disabled by default, user must enable
 			},
+		},
+		Patterns: PatternsConfig{
+			Directories: []string{
+				filepath.Join(configDir, "patterns"),
+				"./patterns",
+			},
+		},
+		Sessions: SessionsConfig{
+			Directory:    filepath.Join(configDir, "sessions"),
+			MaxHistory:   100,
+			PersistState: true,
 		},
 	}
 }

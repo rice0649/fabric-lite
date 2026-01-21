@@ -3,6 +3,8 @@ package tools
 import (
 	"fmt"
 	"os/exec"
+
+	"github.com/rice0649/fabric-lite/internal/core"
 )
 
 // Tool defines the interface for AI coding assistant tools
@@ -101,9 +103,14 @@ func (t *BaseTool) IsAvailable() bool {
 func init() {
 	// Register all tools
 	RegisterTool(NewGeminiTool())
-	RegisterTool(NewCodexTool())
+	// RegisterTool(NewCodexTool()) // CodexTool is now registered via RegisterConfiguredTools
 	RegisterTool(NewOpenCodeTool())
 	RegisterTool(NewFabricTool())
 	RegisterTool(NewClaudeTool())
-	RegisterTool(NewOllamaTool())
+	RegisterTool(NewOllamaTool("http://localhost:11434"))
+}
+
+// RegisterConfiguredTools registers tools that require configuration from the main config.
+func RegisterConfiguredTools(codexConfig core.CodexConfig, pm *core.ProviderManager) {
+	RegisterTool(NewCodexTool(codexConfig, pm))
 }

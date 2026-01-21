@@ -8,6 +8,28 @@ import (
 	"github.com/rice0649/fabric-lite/internal/providers"
 )
 
+var (
+	defaultProviderManager *ProviderManager
+	pmOnce                 sync.Once
+)
+
+// SetDefaultProviderManager sets the global ProviderManager instance.
+// This should only be called once during application initialization.
+func SetDefaultProviderManager(pm *ProviderManager) {
+	pmOnce.Do(func() {
+		defaultProviderManager = pm
+	})
+}
+
+// GetDefaultProviderManager returns the global ProviderManager instance.
+// Panics if the manager has not been set.
+func GetDefaultProviderManager() *ProviderManager {
+	if defaultProviderManager == nil {
+		panic("Default ProviderManager has not been initialized. Call SetDefaultProviderManager first.")
+	}
+	return defaultProviderManager
+}
+
 // ProviderManager manages AI provider instances and their lifecycle
 type ProviderManager struct {
 	providers   map[string]providers.Provider
@@ -15,6 +37,7 @@ type ProviderManager struct {
 	mutex       sync.RWMutex
 	initialized bool
 }
+
 
 // NewProviderManager creates a new provider manager
 func NewProviderManager(config *providers.Config) *ProviderManager {

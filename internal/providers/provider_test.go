@@ -2,6 +2,8 @@ package providers
 
 import (
 	"context"
+	"net/http"
+	"net/http/httptest"
 	"testing"
 	"time"
 )
@@ -340,6 +342,48 @@ func TestLoadProvidersWithError(t *testing.T) {
 	err := LoadProviders(configs)
 	if err == nil {
 		t.Error("Expected error loading invalid provider, got nil")
+	}
+}
+
+func TestOllamaProvider_IsAvailable(t *testing.T) {
+	// Test case 1: Ollama server is available
+	// Create a mock HTTP server that always returns 200 OK
+	mockServerAvailable := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`{"models": []}`))
+	}))
+	defer mockServerAvailable.Close()
+
+	providerAvailable, err := NewOllamaProvider("test-ollama-available", map[string]any{
+		"endpoint": mockServerAvailable.URL,
+		"model":    "llama3",
+	})
+	if err != nil {
+		t.Fatalf("Failed to create Ollama provider: %v", err)
+	}
+
+	if !providerAvailable.IsAvailable() {
+		t.Errorf("Expected OllamaProvider to be available, but it reported unavailable")
+	}
+
+	// Test case 2: Ollama server is unavailable
+	// Create an endpoint that will not respond or respond with an error
+	// A simple way to simulate this is to use a non-existent URL or close the server immediately
+	mockServerUnavailable := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNotFound)
+	}))
+	mockServerUnavailable.Close() // Close the server immediately to simulate unavailability
+
+	providerUnavailable, err := NewOllamaProvider("test-ollama-unavailable", map[string]any{
+		"endpoint": mockServerUnavailable.URL,
+		"model":    "llama3",
+	})
+	if err != nil {
+		t.Fatalf("Failed to create Ollama provider: %v", err)
+	}
+
+	if providerUnavailable.IsAvailable() {
+		t.Errorf("Expected OllamaProvider to be unavailable, but it reported available")
 	}
 }
 

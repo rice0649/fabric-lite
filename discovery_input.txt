@@ -1,0 +1,1 @@
+Research the fabric-lite project requirements and analyze the codebase for current capabilities. Focus on identifying key features, technical architecture, and areas for enhancement. Use web search to gather latest best practices for CLI tools and AI integration patterns as of January 2026.

@@ -1,110 +1,143 @@
 package tools
 
 import (
-	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
-	"time"
+	"os/exec"
+	"strings"
 )
 
-const (
-	ollamaDefaultURL     = "http://localhost:11434/api/chat"
-	ollamaRequestTimeout = 120 * time.Second
-	ollamaHealthURL      = "http://localhost:11434/api/tags"
-	ollamaDefaultModel   = "llama3:latest"
-)
-
-// OllamaTool is a tool for interacting with a local Ollama server.
+// OllamaTool represents the Ollama CLI tool
 type OllamaTool struct {
-	BaseTool
+	endpoint string
 }
 
-type ollamaChatResponse struct {
-	Model   string `json:"model"`
-	Message struct {
-		Role    string `json:"role"`
-		Content string `json:"content"`
-	} `json:"message"`
-	Done  bool   `json:"done"`
-	Error string `json:"error,omitempty"`
+func NewOllamaTool(endpoint string) *OllamaTool {
+	return &OllamaTool{endpoint: endpoint}
 }
 
-// NewOllamaTool creates a new OllamaTool.
-func NewOllamaTool() *OllamaTool {
-	return &OllamaTool{
-		BaseTool: BaseTool{
-			name:        "ollama",
-			description: "The Quick Task Automator. Runs local models like Llama3 for fast, simple tasks like boilerplate generation and formatting.",
-			command:     "", // Not an external command
+func (t *OllamaTool) Name() string {
+	return "ollama"
+}
+
+func (t *OllamaTool) Description() string {
+	return "Interact with the Ollama CLI to pull and list models. Requires Ollama to be installed and running."
+}
+
+func (t *OllamaTool) InputSchema() map[string]any {
+	return map[string]any{
+		"type": "object",
+		"properties": map[string]any{
+			"command": map[string]any{
+				"type":        "string",
+				"description": "The ollama command to execute (e.g., 'pull llama3', 'list').",
+				"enum":        []string{"pull", "list"},
+			},
+			"model": map[string]any{
+				"type":        "string",
+				"description": "The model name, required for 'pull' command.",
+			},
 		},
+		"required": []string{"command"},
 	}
 }
 
-// IsAvailable checks if the Ollama server is running.
-func (t *OllamaTool) IsAvailable() bool {
-	client := http.Client{
-		Timeout: 2 * time.Second,
-	}
-	resp, err := client.Get(ollamaHealthURL)
-	if err != nil {
-		return false
-	}
-	defer resp.Body.Close()
-	return resp.StatusCode == http.StatusOK
+func (t *OllamaTool) GetCommand() string {
+	return "ollama"
 }
 
-// Execute sends the prompt to the Ollama server.
 func (t *OllamaTool) Execute(ctx ExecutionContext) (*ExecutionResult, error) {
-	// Ollama is non-interactive, so we capture the output.
-	// Default to llama3 if no other model is specified in args
-	model := ollamaDefaultModel
-	if len(ctx.Args) > 0 {
-		model = ctx.Args[0]
+	// The input for OllamaTool comes from ctx.Args (command and model)
+	if len(ctx.Args) == 0 {
+		return nil, fmt.Errorf("missing command for ollama tool")
 	}
 
-	// Create request body matching Ollama API format
-	requestBody, err := json.Marshal(map[string]interface{}{
-		"model": model,
-		"messages": []map[string]string{
-			{"role": "user", "content": ctx.Prompt},
-		},
-		"stream": false,
-	})
+	command := ctx.Args[0]
+	input := make(map[string]any)
+	input["command"] = command
+
+	if command == "pull" {
+		if len(ctx.Args) < 2 {
+			return nil, fmt.Errorf("'model' is required for 'pull' command")
+		}
+		input["model"] = ctx.Args[1]
+	}
+
+	var output string
+	var err error
+
+	switch command {
+	case "pull":
+		model := input["model"].(string)
+		output, err = t.pullModel(context.Background(), model)
+	case "list":
+		output, err = t.listModels(context.Background())
+	default:
+		return nil, fmt.Errorf("unsupported ollama command: %s", command)
+	}
+
 	if err != nil {
-		return nil, fmt.Errorf("failed to marshal ollama request: %w", err)
+		return &ExecutionResult{
+			Output:   "",
+			Error:    err.Error(),
+			ExitCode: 1,
+			Success:  false,
+		}, nil
 	}
 
-	client := http.Client{
-		Timeout: ollamaRequestTimeout,
-	}
-
-	resp, err := client.Post(ollamaDefaultURL, "application/json", bytes.NewBuffer(requestBody))
-	if err != nil {
-		return &ExecutionResult{Success: false, Error: err.Error()}, fmt.Errorf("failed to send request to ollama: %w", err)
-	}
-	defer resp.Body.Close()
-
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return &ExecutionResult{Success: false, Error: err.Error()}, fmt.Errorf("failed to read ollama response body: %w", err)
-	}
-
-	if resp.StatusCode != http.StatusOK {
-		errorMsg := fmt.Sprintf("received non-OK status from ollama: %s. Body: %s", resp.Status, string(body))
-		return &ExecutionResult{Success: false, Error: errorMsg, ExitCode: resp.StatusCode}, nil
-	}
-
-	var ollamaResp ollamaChatResponse
-	if err := json.Unmarshal(body, &ollamaResp); err != nil {
-		return &ExecutionResult{Success: false, Error: err.Error()}, fmt.Errorf("failed to unmarshal ollama response: %w", err)
-	}
-
-	output := ollamaResp.Message.Content
 	return &ExecutionResult{
 		Output:   output,
-		Success:  true,
+		Error:    "",
 		ExitCode: 0,
+		Success:  true,
 	}, nil
+}
+
+func (t *OllamaTool) pullModel(ctx context.Context, model string) (string, error) {
+	cmd := exec.CommandContext(ctx, "ollama", "pull", model)
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		return "", fmt.Errorf("failed to pull model '%s': %v, output: %s", model, err, string(output))
+	}
+	return string(output), nil
+}
+
+func (t *OllamaTool) listModels(ctx context.Context) (string, error) {
+	// Directly query the Ollama API for models as it's more reliable than parsing CLI output
+	resp, err := http.Get(t.endpoint + "/api/tags")
+	if err != nil {
+		return "", fmt.Errorf("failed to connect to Ollama API: %w", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		body, _ := io.ReadAll(resp.Body)
+		return "", fmt.Errorf("ollama API returned status %d: %s", resp.StatusCode, string(body))
+	}
+
+	var result struct {
+		Models []struct {
+			Name string `json:"name"`
+		} `json:"models"`
+	}
+
+	if err := json.NewDecoder(resp.Body).Decode(&result); err != nil {
+		return "", fmt.Errorf("failed to decode Ollama API response: %w", err)
+	}
+
+	var models []string
+	for _, m := range result.Models {
+		models = append(models, m.Name)
+	}
+
+	return strings.Join(models, "\n"), nil
+}
+
+func (t *OllamaTool) IsAvailable() bool {
+	// Check if ollama is in PATH
+	_, err := exec.LookPath("ollama")
+	return err == nil
 }
