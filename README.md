@@ -91,6 +91,23 @@ chmod +x fabric-lite-linux
 ./fabric-lite-linux --help
 ```
 
+## 📖 Complete User Guide
+
+**📘 New to AI tools?** Read our comprehensive user manual:
+[USER_MANUAL.md](./USER_MANUAL.md)
+
+**📕 Microsoft Word version:** [fabric-lite-user-manual.docx](./fabric-lite-user-manual.docx)
+
+Written specifically for complete beginners - no technical knowledge required!
+
+### What's Inside:
+- ✅ 5-minute getting started guide
+- ✅ Step-by-step instructions with pictures
+- ✅ Real examples you can use immediately  
+- ✅ Troubleshooting for common issues
+- ✅ Pro tips and shortcuts
+- ✅ Safety and privacy guidance
+
 ## Advanced Options (Optional)
 
 If you want more than basic Ollama:
