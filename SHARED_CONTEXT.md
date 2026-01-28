@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # SHARED_CONTEXT.md - Your Augmented "Sleeve" Stack
 
 This document represents your core "consciousness" or "stack" within the fabric-lite ecosystem. All AI agents ("constructs") are instructed to load and comprehend this context to align their actions with your mission, goals, strengths, and preferred workflow.

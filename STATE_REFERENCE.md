@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Fabric-Lite State Management Reference
 
 **Last Updated**: 2026-01-20  

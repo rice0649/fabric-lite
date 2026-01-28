@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Component Breakdown - Fabric-Lite Multi-Agent System
 
 ## 1. Core Orchestration Components

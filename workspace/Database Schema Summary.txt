@@ -1,0 +1,30 @@
+Database Schema Summary
+tbl_100_Alpha (Personnel Master)
+
+Purpose: The central table for all personnel information.
+
+Key Columns: SSAN (Primary Key), DOD_ID, Last_Name, First_Name, Rank, Pos (Position), PAFSC, CAFSC, etc.
+
+tbl_200_Ojt (OJT Records)
+
+Purpose: Tracks core OJT and CDC information.
+
+Key Columns: SSAN (Foreign Key to tbl_100_Alpha), DIERT, CDC Info, Tng (Status), etc.
+
+tbl_201_Ugt (Upgrade Training Records)
+
+Purpose: Tracks detailed monthly UGT progress.
+
+Key Columns: SSAN (Foreign Key to tbl_200_Ojt), % Completed, Core Tasks Reqd, Core Tasks Completed, TSC, Last Updated, etc.
+
+tbl_300_Umd (Unit Manning Document)
+
+Purpose: Contains all authorized positions for the unit.
+
+Key Columns: POS (Primary Key), AUTH AFSC, UNIT TITLE, etc.
+
+tbl_400_MyLUsers (Ancillary Accounts)
+
+Purpose: Stores user account information.
+
+Key Columns: Edipi (Primary Key), Email address, PASCODE, etc.

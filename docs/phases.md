@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Development Phases Guide
 
 AI Project Forge uses a structured phase-based approach to software development. Each phase has a specific purpose, recommended AI tool, and checkpoint criteria.

@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Enhanced Development Workflow with Tool Coordination
 
 This guide demonstrates the recommended workflow for using fabric-lite's enhanced tool ecosystem, where meta-tools coordinate specialized AI assistants for optimal results.

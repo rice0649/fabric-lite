@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 ### **Implementation Plan for `opencode`: `forge` User Context Onboarding**
 
 **Objective:**

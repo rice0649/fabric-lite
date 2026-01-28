@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # fabric-lite
 
 A lightweight AI augmentation framework inspired by [Fabric](https://github.com/danielmiessler/fabric).

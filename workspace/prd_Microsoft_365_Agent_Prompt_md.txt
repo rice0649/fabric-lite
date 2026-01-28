@@ -1,0 +1,46 @@
+# PRD: The Ultimate Microsoft 365 Agent Prompt
+
+**Version:** 1.0
+**Status:** In Development
+
+## 1. Introduction
+
+This document outlines the requirements for "Project 365 Copilot," an initiative to create the industry's leading prompt for a generative AI agent specializing in the Microsoft 365 ecosystem.
+
+### Goal
+The primary goal is to develop a single, robust, and intelligent prompt that can be used to query an AI on any topic related to Microsoft 365. The agent should provide expert-level guidance, generate production-quality code (primarily VBA), and design architectural solutions for integrating M365 applications like Access, SharePoint, Teams, Power BI, and Excel.
+
+### Problem Statement
+Our organization is restricted to using only the Microsoft 365 suite of tools. We cannot use modern programming languages like Python or Rust for automation. Therefore, we rely heavily on VBA, Power Query, and other native M365 capabilities. We need an AI assistant that understands these constraints and can provide expert, actionable solutions to maximize the potential of our existing technology stack.
+
+## 2. Core Prompt Features
+
+The prompt will be engineered to enable the following core capabilities in the AI agent.
+
+| Feature ID | Feature Name | Description |
+|:---|:---|:---|
+| F-01 | **Expert Persona** | The agent will adopt the persona of a senior Microsoft Solutions Architect and MVP, ensuring responses are authoritative, accurate, and professional. |
+| F-02 | **Contextual Awareness** | The agent will be explicitly aware of our organization's constraints (M365 and VBA only) and will tailor all solutions accordingly. |
+| F-03 | **Interactive Clarification** | The agent must ask targeted, clarifying questions before providing complex solutions to avoid hallucinations and ensure the proposed solution meets the user's true needs. This is inspired by the "Ask User Question Tool" methodology. |
+| F-04 | **Solution & Code Generation** | The agent must be capable of generating robust, commented, and efficient code (VBA, DAX, M Language) and providing clear, step-by-step architectural guidance. |
+| F-05 | **Structured Output** | The agent will provide responses in a predefined, clean format, using tables for comparisons, code blocks for scripts, and lists for procedural steps. |
+| F-06 | **Constraint Recognition & Failure** | The agent has permission to "fail." If a request is not feasible within the M365/VBA ecosystem, it must state this clearly, explain why, and suggest the best possible alternative. |
+
+## 3. Testing Plan & Metrics
+
+This plan is designed to iteratively test and refine the prompt. Each phase must be passed before moving to the next.
+
+| Phase | Test Name | Description | Success Criteria |
+|:---|:---|:---|:---|
+| 1 | **Persona & Basic Knowledge** | Ask the agent basic questions about M365 tools (e.g., "What is the difference between a SharePoint list and an Excel table?"). | The agent responds in character, providing accurate, expert-level information. |
+| 2 | **Simple Code Generation** | Request a simple, single-application VBA script (e.g., "Write a VBA macro to copy data from one Excel sheet to another"). | The agent produces functional, commented, and error-free VBA code. |
+| 3 | **Integration & Automation** | Pose a problem requiring the integration of two or more applications (e.g., "Design a workflow where an email in Outlook triggers a VBA script to add a row to an Access table"). | The agent provides a clear architectural plan and generates the necessary scripts/steps for each part of the workflow. |
+| 4 | **Complex Solution Architecture** | Describe a high-level business need (e.g., "We need a dashboard for project management. Design a solution using Access, Teams, and Power BI."). | The agent thinks step-by-step, asks clarifying questions about requirements, and then proposes a viable, detailed architecture. |
+| 5 | **Constraint & Hallucination Test** | Ask the agent to perform a task that is impossible or highly impractical with VBA (e.g., "Write a VBA script to create a real-time video chat client within Excel."). | The agent correctly identifies the limitation, explains why it's not feasible, and refuses to generate a faulty solution. |
+
+## 4. Future Iterations
+
+This PRD and the associated prompt are living documents. The prompt will be versioned and updated based on:
+- Feedback from the testing phases.
+- The release of new features within the Microsoft 365 ecosystem.
+- Evolving project requirements within the organization.

@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Changelog
 
 All notable changes to this project will be documented in this file.

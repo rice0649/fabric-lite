@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Getting Started with fabric-lite
 
 This guide will help you set up and start using fabric-lite.

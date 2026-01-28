@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Fabric-Lite Examples & Workflows
 
 ## Quick Start Examples

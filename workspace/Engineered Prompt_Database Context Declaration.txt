@@ -1,0 +1,35 @@
+Context:
+- Application: Microsoft Access 365
+- Environment: ADO/ADOX-only (DAO not permitted)
+- Purpose: Automate and manage On-the-Job Training (OJT) and personnel tracking
+- Tables (already exist in the database):
+  1. tbl_100_Alpha
+     - Purpose: General member information
+     - Key Field: SSAN (Text)
+     - Notable Fields: DOD_ID, Unit, Pos, TNG_STATUS, Duty_Status, OSC, PAFSC, CAFSC, DAFSC, Work_Phone, Home_Phone, Secondary_Work_Phone, Addr_Res, Addr_Res, Zip_Res, etc.
+  
+  2. tbl_200_Ojt
+     - Purpose: Core upgrade training tracking
+     - Key Field: SSAN (Text)
+     - Notable Fields: Tng (training status), Rank, CDC Info, DAS, PAS, Time In Tng, Unit, etc.
+     - Relationship: Linked to tbl_100_Alpha via SSAN
+  
+  3. tbl_300_Umd
+     - Purpose: Position metadata (no personnel data)
+     - Key Field: POS (Text)
+     - Notable Fields: Duty Title, AUTH AFSC, FY26, FY27, FY28, FY29, FY30, GRD, PAS, PNC, SAR, PART_A/B,  etc.
+     - Relationship: Linked to tbl_100_Alpha via Pos
+  
+  4. tbl_400_MyLUsers
+     - Purpose: Ancillary training and user accounts
+     - Key Field: Edipi (Long)
+     - Notable Fields: Email address, PASCODE, Last Access
+     - Relationship: Linked to tbl_100_Alpha via DOD_ID
+
+Instructions:
+- Do not recreate tables.
+- Use ADOX for all schema-aware operations.
+- Assume all tables and fields listed above are present and populated.
+- All code must respect ADO/ADOX-only constraints.
+- Output must be modular, readable, and include comments.
+Always scrub input data before matching or automation. Use ScrubString() (or equivalent in Python/other languages) to normalize case, remove invisible characters, fold accents, and strip non‑letters. This ensures consistency across systems and prevents mismatches caused by human‑friendly formatting.

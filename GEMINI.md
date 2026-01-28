@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # GEMINI.md
 
 This file provides context for the Gemini CLI agent to interact with the `fabric-lite` repository.

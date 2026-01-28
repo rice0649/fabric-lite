@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Multi-Agent Orchestration System - Your Augmented "Sleeve"
 
 ## Overview

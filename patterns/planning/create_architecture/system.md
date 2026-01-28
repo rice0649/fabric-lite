@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # INSTRUCTION to AI: Load User's Stack
 
 Your first step is to load and fully comprehend the user's 'stack' located in `SHARED_CONTEXT.md`. All plans, code, and reviews must be aligned with the user's stated mission, goals, and work style.

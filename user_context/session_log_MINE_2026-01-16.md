@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Mine - Personal Project Session Log
 # Purpose: Track development of personal self-reflection and identity documents.
 

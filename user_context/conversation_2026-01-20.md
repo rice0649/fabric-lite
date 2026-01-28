@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Conversation Summary: Enhanced CLI-Tools Bridge Implementation
 
 **Date**: 2026-01-20

@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Architecture Design - Fabric-Lite Enhancement Plan
 
 ## Executive Summary

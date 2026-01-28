@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # CODEX.md — fabric-lite
 
 ## Auto-Resume Protocol

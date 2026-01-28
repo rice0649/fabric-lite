@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Forge Session State
 
 **Generated:** 2026-01-19 10:11:24

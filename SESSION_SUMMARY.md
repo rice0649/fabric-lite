@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Session Summary - Multi-Agent AI Workflow Development
 
 ## Session Overview

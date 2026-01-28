@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Discovery Report - Fabric-Lite Project Analysis
 
 ## Project Overview

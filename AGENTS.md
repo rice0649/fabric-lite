@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Repository Guidelines for Agentic Coding
 
 ## Project Structure & Module Organization

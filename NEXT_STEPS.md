@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Fabric-Lite: Next Steps Implementation Plan
 
 **Generated**: 2026-01-20

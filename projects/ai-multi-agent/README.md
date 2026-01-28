@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Multi-Agent AI Workflow with Forge + Fabric-Lite
 
 A comprehensive project demonstrating the power of running multiple AI agents in headless background mode using forge and fabric-lite.

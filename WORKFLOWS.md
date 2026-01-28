@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Multi-Tool Coordination Workflows
 
 This guide demonstrates how to use multiple AI tools in coordination for complex tasks, leveraging the combined capabilities of fabric-lite's tool ecosystem.

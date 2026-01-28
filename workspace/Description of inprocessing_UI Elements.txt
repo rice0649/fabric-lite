@@ -1,0 +1,79 @@
+Description of UI Elements
+1. Member Identification
+This top section allows the UTM to quickly find an existing member by Last Name or SSAN using the [Find Member] button, which would then populate the entire form. For new members, the UTM would fill this section out manually.
+
+2. Tab: Personnel Data
+This is the default view, capturing all the core data points that will populate tbl_100_Alpha.
+
+Fields like Rank, Unit, and PAFSC would be combo boxes linked to lookup tables to ensure data consistency.
+
+3. Tab: Training Status
+This tab focuses on data for tbl_200_Ojt and tbl_201_Ugt.
+
+It would contain fields for DIERT (Date Initially Entered Retraining), Initial Training Status, and sections to log CDC Enrollment (Course #, Enrollment Date) and initial UGT Status (TSC, Core Tasks Required).
+
+4. Tab: In-Processing Checklist
+This tab is a digital version of the procedural checklists from the UTM Procedures PSDG.pdf and Mx_Training_PSD_Guide.pdf.
+
+It would contain a series of checkboxes for the UTM to complete during the interview, such as:
+
+[✓] Briefed on OJT Program
+
+[ ] Introduced to Supervisor & Work Center
+
+[✓] Member counseled on CDC requirements
+
+[ ] Scheduled for initial safety training
+
+[ ] Reviewed Maintenance Training Program specifics
+
+A "Date Completed" field for each item.
+
+5. Action Buttons
+[Save Record]: Saves all data from the form into the corresponding tables (tbl_100_Alpha, tbl_200_Ojt, etc.).
+
+[Clear Form]: Clears all fields to add a new member.
+
+[Print Interview Sheet]: Generates a report of the completed interview checklist for record-keeping.
+
+[Close]: Closes the form.
+
+This design provides a centralized, efficient tool for the UTM to manage the entire in-processing lifecycle, from data entry to procedural compliance.
+
+Shall I proceed with creating the specific VBA logic and table-linking plan for this module?
+
+================================================================================
+| FORM: UTM In-Processing & Records Review                                     |
+================================================================================
+|                                                                              |
+|  Member Identification                                                       |
+|  ---------------------                                                       |
+|  Last Name:   [ TextBox: txtLastName        ]   SSAN: [ TextBox: txtSSAN    ]|
+|  First Name:  [ TextBox: txtFirstName       ]   DOD ID: [ TextBox: txtDODID  ]|
+|  Rank:        [ ComboBox: cboRank           ]                                |
+|                                                              [ Find Member ] |
+|  --------------------------------------------------------------------------  |
+|  | Tab: Personnel Data |  Tab: Training Status |  Tab: In-Pro Checklist |     |
+|  --------------------------------------------------------------------------  |
+|                                                                              |
+|  PAS:      [ TextBox: txtPAS     ]   Unit:    [ TextBox: txtUnit            ] |
+|  Office Symbol: [ TextBox: txtOSC     ]   Duty Phone: [ TextBox: txtDutyPhone ]|
+|  PAFSC:         [ TextBox: txtPAFSC   ]   CAFSC:     [ TextBox: txtCAFSC     ]|
+|  Position #:    [ TextBox: txtPOS     ]   Auth AFSC:  [ TextBox: txtAuthAFSC  ]|
+|                                                                              |
+|  --- Service Dates --------------------------------------------------------  |
+|  Pay Date:  [ DatePicker: dtpPayDate ]   TAFMSD: [ DatePicker: dtpTAFMSD    ] |
+|  ETS:       [ DatePicker: dtpETS     ]   DOS:    [ DatePicker: dtpDOS       ] |
+|                                                                              |
+|  --- Contact Information --------------------------------------------------  |
+|  Email Address: [ TextBox: txtEmail                                        ] |
+|  Home Phone:    [ TextBox: txtHomePhone                                    ] |
+|                                                                              |
+|  --- Security Clearance ---------------------------------------------------  |
+|  Clearance Level:  [ ComboBox: cboClearance ]                                 |
+|  Eligibility Date: [ DatePicker: dtpSctyEligDt]                               |
+|                                                                              |
+|                                                                              |
+|==============================================================================|
+| [Save Record] [Clear Form] [Print Interview Sheet] [Close]                    |
+--------------------------------------------------------------------------------

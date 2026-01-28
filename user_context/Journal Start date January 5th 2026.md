@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 Journal: Start date January 5th 2026
 
 1: Model the training managers for the MXG after Tesla's business strategy.

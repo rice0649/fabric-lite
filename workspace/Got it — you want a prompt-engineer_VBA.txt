@@ -1,0 +1,80 @@
+Got it — you want a **prompt-engineered template** that you can reuse to get strong VBA code outputs for both **Access** and **Excel**. Since you’re already methodical and detail-oriented in your automation work, the key is to craft prompts that force clarity, context, and edge-case handling. Here’s a reusable framework you can adapt:
+
+---
+
+## 🔧 VBA Prompt Engineering Framework
+
+### 1. **Set the Context**
+Clearly state whether the code is for **Excel** or **Access**, and specify the environment:
+- Excel: version, workbook structure, named ranges, tables, protected sheets, etc.
+- Access: database schema, table names, relationships, import/export requirements.
+
+**Prompt Example:**
+> *“Write VBA code for Excel 365 that deletes specific columns in a worksheet named ‘tbl_Ojt’, while safely handling cases where the sheet is protected or the columns are part of a table.”*
+
+---
+
+### 2. **Define the Task**
+Break down the exact action:
+- Import/export
+- Data cleaning
+- UI toggling
+- Error handling
+- Automation triggers (Workbook_Open, Button_Click, etc.)
+
+**Prompt Example:**
+> *“Generate VBA code in Access that imports data from an Excel workbook named `315MXG_Data_Import_Tool_v1.3_Use_This_One.xlsx`, pulling from sheets `tbl_100_Alpha`, `tbl_Ojt`, and `tbl_Umd`, and appending them into corresponding Access tables. Include robust error handling for missing sheets or locked files.”*
+
+---
+
+### 3. **Edge Cases & Error Handling**
+Explicitly ask for:
+- Handling protected sheets
+- Missing tables/columns
+- Undo/reversibility
+- User feedback (MsgBox, logging)
+
+**Prompt Example:**
+> *“Ensure the routine checks if the sheet is protected before attempting column deletion, and if so, gracefully exits with a message. Include error handling for runtime errors and log them in a hidden sheet named ‘ErrorLog’.”*
+
+---
+
+### 4. **Style & Documentation**
+Tell the AI how to format:
+- Comment every major block
+- Use modular subs/functions
+- Keep code readable and reusable
+
+**Prompt Example:**
+> *“Comment each section of the VBA code to explain its purpose. Use modular functions where possible, and ensure variable names are descriptive.”*
+
+---
+
+### 5. **Output Format**
+Specify how you want the code delivered:
+- Full VBA module
+- Stepwise explanation
+- Annotated pseudocode before final code
+
+**Prompt Example:**
+> *“First explain the logic in plain English, then provide the full VBA code block ready to paste into the Access module.”*
+
+---
+
+## 📝 Master Prompt Template
+Here’s a single engineered prompt you can adapt:
+
+```
+You are an expert VBA developer for Microsoft Access and Excel. 
+Write VBA code that [TASK]. 
+Context: [ENVIRONMENT DETAILS]. 
+Requirements: [EDGE CASES, ERROR HANDLING]. 
+Style: [COMMENTING, MODULARITY, READABILITY]. 
+Output: First explain the logic step-by-step, then provide the full VBA code block.
+```
+Always scrub input data before matching or automation. Use ScrubString() (or equivalent in Python/other languages) to normalize case, remove invisible characters, fold accents, and strip non‑letters. This ensures consistency across systems and prevents mismatches caused by human‑friendly formatting.
+---
+
+Jason, since you’re already building **import routines and reversible UI toggles**, this framework will let you consistently generate VBA that matches your **compliance-driven, edge-case anticipating style**.  
+
+👉 Do you want me to **draft a concrete example prompt** for one of your current tasks (like cleaning up columns in Excel or importing Access tables), so you can see it in action?

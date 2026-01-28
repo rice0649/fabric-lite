@@ -1,0 +1,198 @@
+ObjectType	ObjectName	ParentName	ExtraInfo	DateCaptured
+Table	db_inventory			15-Dec-25
+Column	DateCaptured	db_inventory	Type=7, Size=0	15-Dec-25
+Column	ExtraInfo	db_inventory	Type=202, Size=255	15-Dec-25
+Column	ObjectName	db_inventory	Type=202, Size=255	15-Dec-25
+Column	ObjectType	db_inventory	Type=202, Size=50	15-Dec-25
+Column	ParentName	db_inventory	Type=202, Size=255	15-Dec-25
+Table	tbl_100_Alpha			15-Dec-25
+Column	2AFSC	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	3AFSC	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	4AFSC	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Addr_Mail	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Addr_Res	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Admin	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Admin_Stop_Dt	tbl_100_Alpha	Type=7, Size=0	15-Dec-25
+Column	Age	tbl_100_Alpha	Type=5, Size=0	15-Dec-25
+Column	ANG_Tech_Id	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	AS_OF	tbl_100_Alpha	Type=7, Size=0	15-Dec-25
+Column	Auth_AFSC	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Auth_Grade	tbl_100_Alpha	Type=5, Size=0	15-Dec-25
+Column	Birth_City	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Birth_State	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	CAFSC	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	City_Mail	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	City_Res	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Civ_ART_Id	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Current Duty Phone	tbl_100_Alpha	Type=5, Size=0	15-Dec-25
+Column	Current Office Symbol	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	DAFSC	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	DAS	tbl_100_Alpha	Type=7, Size=0	15-Dec-25
+Column	DEROS	tbl_100_Alpha	Type=7, Size=0	15-Dec-25
+Column	DOB	tbl_100_Alpha	Type=7, Size=0	15-Dec-25
+Column	DOD_ID	tbl_100_Alpha	Type=5, Size=0	15-Dec-25
+Column	DOE	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	DOS	tbl_100_Alpha	Type=7, Size=0	15-Dec-25
+Column	Dt_20_Yr_Sat_Svc_Compl	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Duty Status Desc	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Duty_Eff_Dt	tbl_100_Alpha	Type=7, Size=0	15-Dec-25
+Column	DUTY_EFF_DT2	tbl_100_Alpha	Type=7, Size=0	15-Dec-25
+Column	Duty_Status	tbl_100_Alpha	Type=5, Size=0	15-Dec-25
+Column	Duty_Status_Start_Dt	tbl_100_Alpha	Type=7, Size=0	15-Dec-25
+Column	EDCSA_Date	tbl_100_Alpha	Type=7, Size=0	15-Dec-25
+Column	ETS	tbl_100_Alpha	Type=7, Size=0	15-Dec-25
+Column	First_Name	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Home_Phone	tbl_100_Alpha	Type=5, Size=0	15-Dec-25
+Column	HYTMSD	tbl_100_Alpha	Type=7, Size=0	15-Dec-25
+Column	Last_Name	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Legal	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Legal_Stop_Dt	tbl_100_Alpha	Type=7, Size=0	15-Dec-25
+Column	Middle_Name	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	OSC	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	PAFSC	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Pay_Date	tbl_100_Alpha	Type=7, Size=0	15-Dec-25
+Column	PEC	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	PERS_CAT	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Phys	tbl_100_Alpha	Type=5, Size=0	15-Dec-25
+Column	Phys_Stop_Dt	tbl_100_Alpha	Type=7, Size=0	15-Dec-25
+Column	Pos	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	POSN	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Rank	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Reserve_Overage	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Ret Retention Part Mo Da	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	SAR	tbl_100_Alpha	Type=5, Size=0	15-Dec-25
+Column	Satis_Svc	tbl_100_Alpha	Type=5, Size=0	15-Dec-25
+Column	SATSVC	tbl_100_Alpha	Type=5, Size=0	15-Dec-25
+Column	Scty Clear Elig Dt	tbl_100_Alpha	Type=7, Size=0	15-Dec-25
+Column	Secondary_Work_Phone	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Sex	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Short_Pas	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	SSAN	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	State_Mail	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	State_Res	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	TAFMS	tbl_100_Alpha	Type=7, Size=0	15-Dec-25
+Column	Time	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Time_Stop_Dt	tbl_100_Alpha	Type=7, Size=0	15-Dec-25
+Column	TIS	tbl_100_Alpha	Type=5, Size=0	15-Dec-25
+Column	TNG_STATUS	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	TNG_STATUS_EFF_DT	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	TOE Years Desc	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Total_Ret_Points	tbl_100_Alpha	Type=7, Size=0	15-Dec-25
+Column	Unit	tbl_100_Alpha	Type=202, Size=255	15-Dec-25
+Column	Work_Phone	tbl_100_Alpha	Type=5, Size=0	15-Dec-25
+Column	Zip_Res	tbl_100_Alpha	Type=5, Size=0	15-Dec-25
+Table	tbl_200_Ojt			15-Dec-25
+Column	AFSC2	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	AFSC3	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	CAFSC	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	CDC Info	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	CDC Info2	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	CDC Info3	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	CDC Info4	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	CDC Info5	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	DAFSC	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	DAS	tbl_200_Ojt	Type=7, Size=0	15-Dec-25
+Column	DET	tbl_200_Ojt	Type=7, Size=0	15-Dec-25
+Column	DIERT	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	DOS	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	Dy Phone	tbl_200_Ojt	Type=5, Size=0	15-Dec-25
+Column	ECI Stat Dt	tbl_200_Ojt	Type=7, Size=0	15-Dec-25
+Column	ECI Stat Dt2	tbl_200_Ojt	Type=7, Size=0	15-Dec-25
+Column	ECI Stat Dt3	tbl_200_Ojt	Type=7, Size=0	15-Dec-25
+Column	ECI Stat Dt4	tbl_200_Ojt	Type=7, Size=0	15-Dec-25
+Column	ECI Stat Dt5	tbl_200_Ojt	Type=7, Size=0	15-Dec-25
+Column	ECI Status	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	ECI Status2	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	ECI Status3	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	ECI Status4	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	ECI Status5	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	End Dt	tbl_200_Ojt	Type=7, Size=0	15-Dec-25
+Column	End Dt2	tbl_200_Ojt	Type=7, Size=0	15-Dec-25
+Column	End Dt3	tbl_200_Ojt	Type=7, Size=0	15-Dec-25
+Column	End Dt4	tbl_200_Ojt	Type=7, Size=0	15-Dec-25
+Column	End Dt5	tbl_200_Ojt	Type=7, Size=0	15-Dec-25
+Column	Enrl Dt	tbl_200_Ojt	Type=7, Size=0	15-Dec-25
+Column	Enrl Dt2	tbl_200_Ojt	Type=7, Size=0	15-Dec-25
+Column	Enrl Dt3	tbl_200_Ojt	Type=7, Size=0	15-Dec-25
+Column	Enrl Dt4	tbl_200_Ojt	Type=7, Size=0	15-Dec-25
+Column	Enrl Dt5	tbl_200_Ojt	Type=7, Size=0	15-Dec-25
+Column	Name	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	Off Sym	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	PAFSC	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	PAS	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	Proj PAS	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	Proj Rank	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	Rank	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	Ret Eff Dt	tbl_200_Ojt	Type=7, Size=0	15-Dec-25
+Column	RNLTD	tbl_200_Ojt	Type=7, Size=0	15-Dec-25
+Column	SSAN	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	Time In Tng	tbl_200_Ojt	Type=5, Size=0	15-Dec-25
+Column	Tng	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Column	Unit	tbl_200_Ojt	Type=202, Size=255	15-Dec-25
+Table	tbl_300_Umd			15-Dec-25
+Column	AFSC or Duty Title	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	API	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	AUTH AFSC	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	AUTH AFSC Prefix	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	CAT	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	CEC	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	CMG	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	CPD	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	CRMK1	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	CRMK2	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	CRMK3	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	CRMK4	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	CWR PL1	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	CWR PL2	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	CWR PL3	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	CWR1	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	CWR2	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	CWR3	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	DFC	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	DTY	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	FAC	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	FCT	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	FIC	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	FIC Title	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	FMC	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	FY26	tbl_300_Umd	Type=5, Size=0	15-Dec-25
+Column	FY27	tbl_300_Umd	Type=5, Size=0	15-Dec-25
+Column	FY28	tbl_300_Umd	Type=5, Size=0	15-Dec-25
+Column	FY29	tbl_300_Umd	Type=5, Size=0	15-Dec-25
+Column	FY30	tbl_300_Umd	Type=5, Size=0	15-Dec-25
+Column	GRD	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	IGCA RSN	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	LRMK1	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	LRMK2	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	MilTECH	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	MNT	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	MPF	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	MSI	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	OCC	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	OSC	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	OSC LEADER	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	PART_A/B	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	PAS	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	PEC	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	PEC Title	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	PNC	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	POS	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	POS EFF DATE	tbl_300_Umd	Type=5, Size=0	15-Dec-25
+Column	POS THRU DATE	tbl_300_Umd	Type=5, Size=0	15-Dec-25
+Column	PULL_DATE	tbl_300_Umd	Type=7, Size=0	15-Dec-25
+Column	RAFSC Prefix	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	REQ AFSC	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	RGR	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	RIC	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	RMK1	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	RMK2	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	SAR	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	SEI	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Column	UNIT TITLE	tbl_300_Umd	Type=202, Size=255	15-Dec-25
+Table	tbl_400_MyLUsers			15-Dec-25
+Column	Edipi	tbl_400_MyLUsers	Type=5, Size=0	15-Dec-25
+Column	Email address	tbl_400_MyLUsers	Type=202, Size=255	15-Dec-25
+Column	Last Access	tbl_400_MyLUsers	Type=202, Size=255	15-Dec-25
+Column	MAJCOM	tbl_400_MyLUsers	Type=202, Size=255	15-Dec-25
+Column	PASCODE	tbl_400_MyLUsers	Type=202, Size=255	15-Dec-25
+Form	frm_000_Data_Import			15-Dec-25

@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Attention-Aware Context Structure
 
 This directory structure allows fabric-lite to automatically adapt to users' attention profiles and maintain context across different cognitive states and workflows.

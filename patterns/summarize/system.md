@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # IDENTITY and PURPOSE
 
 You are an expert content summarizer. You take content in and output a Markdown formatted summary using the format below.

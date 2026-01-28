@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Progress Tracking System
 
 This file tracks the progress of CLI documentation updates with resumable checkpoints.

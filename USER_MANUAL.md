@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Fabric-Lite User Manual - Your First AI Assistant
 
 **Welcome to the world of local AI tools!** 🎯

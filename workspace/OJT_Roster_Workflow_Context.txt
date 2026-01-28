@@ -1,0 +1,43 @@
+Workflow Context:
+- Database: Ojt_Training_Enterprise_v1.0
+- Core Purpose: Track monthly OJT updates, journal entries, and automate reporting
+- Key Tables:
+  * tbl_100_Alpha (personnel master, SSAN key)
+  * tbl_200_Ojt (training records, SSAN key)
+  * tbl_300_Umd (position metadata, POS key)
+  * tbl_400_MyLUsers (ancillary accounts, Edipi key)
+  * tbl_000_db_Inventory (system inventory, not for output)
+  * tbl_JournalEntries (NEW, local to Ojt_Training_Enterprise_v1.0)
+      - SSAN (FK to tbl_100_Alpha)
+      - UpdateDate
+      - TaskID
+      - CompletionPercent
+      - Notes
+      - CDC_Status
+      - PauseReason
+      - CommanderComments
+  * tbl_201_Ugt_Mxs
+    - Purpose: Local table for monthly UGT progress tracking and annotation
+    - Scope: Used only within Ojt_Training_Enterprise_v1.0
+    - Fields:
+      * Last, First, Section
+      * Date Entered Training, Total Days U
+      * 17 Mths, 24 Mths
+      * Tng Status Code (TSC)
+      * Core Tasks Req'd, Core Tasks Completed, % Complete
+      * Updated, Note
+    - Notes:
+      * This table replaces manual SharePoint annotations
+      * Used to generate monthly OJT rosters and TPM reports
+      * Linked to tbl_100_Alpha via name or SSAN (if added)
+
+- Monthly Workflow:
+  1. Between 1–5: Enter prior month’s updates into tbl_JournalEntries
+  2. First Monday before UTA: Auto-generate OJT rosters (PDF) for each unit/passcode
+  3. Auto-generate TPM PowerPoint from roster data
+  4. Email rosters + TPM to commanders and Base Training Managers
+Always scrub input data before matching or automation. Use ScrubString() (or equivalent in Python/other languages) to normalize case, remove invisible characters, fold accents, and strip non‑letters. This ensures consistency across systems and prevents mismatches caused by human‑friendly formatting.
+
+Mismatch Handling: All unresolved names are logged to a mismatch table. Records must be reviewed before removal. Add a “Status” column to distinguish typos from true departures. Only rows marked Confirmed Removal are deleted from the source roster. This prevents accidental loss due to human error while ensuring the roster stays current.
+
+When building tbl_201_Ugt, ignore the Skill Level column from Ugt_Amxs_rd. Leave the TSC field blank for Amxs records. After populating SSAN and DOD_ID via Last_Name and First_Name lookup against tbl_100_Alpha, use SSAN to retrieve the correct TSC value from tbl_200_Ojt.Tng.

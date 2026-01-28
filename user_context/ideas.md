@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Ideas and Musings
 
 This file is for capturing creative, off-topic, or "squirrel" moments that can be reviewed later.

@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # CLI Documentation Update Plan - fabric-lite & Forge
 
 ## 1. CURRENT STATE ASSESSMENT

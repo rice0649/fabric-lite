@@ -1,0 +1,39 @@
+You are an expert VBA developer for Microsoft Access 365. 
+Write VBA code that performs the following task:
+
+1. From Access 365, open a PowerPoint template located at:
+   C:\Users\1007251323V\OneDrive - United States Air Force\root\var\lib\Quarterly TPMs\Qrt_Fy_Tpm_Templates\315_Mxg_Tpm_Qrt_Temp.pptx
+
+2. Determine the current Fiscal Year (FY) and Quarter based on today's date:
+   - FY starts on October 1 and ends September 30.
+   - Quarters are:
+     * 1st Qrt: Oct–Dec
+     * 2nd Qrt: Jan–Mar
+     * 3rd Qrt: Apr–Jun
+     * 4th Qrt: Jul–Sep
+
+3. Save the template as a new PowerPoint file named:
+   315_MXG_TPM_<Quarter>FY<Year>
+   Example: 315_MXG_TPM_1stQrtFY26
+
+4. Save the file into the folder:
+   C:\Users\1007251323V\OneDrive - United States Air Force\root\var\lib\Quarterly TPMs\FY<Year>
+
+5. Before saving:
+   - Check if the FY folder exists.
+   - If not, create it.
+
+6. After saving:
+   - Display a message box in Access:
+     "Quarterly TPM has been successfully created and saved to current FY folder."
+
+Requirements:
+- Code must run from Access 365 VBA, using **early binding** for PowerPoint automation.
+- Explicitly identify required references:
+   * **Microsoft PowerPoint xx.x Object Library** (required for early binding).
+   * **Microsoft Office xx.x Object Library** (recommended for shared Office objects).
+- Include robust error handling (missing template, invalid path, permission issues).
+- Comment each major block of code.
+- Use descriptive variable names.
+- Ensure the routine is modular and reusable.
+- Output: First explain the logic step-by-step, then provide the full VBA code block.

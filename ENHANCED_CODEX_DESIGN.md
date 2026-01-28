@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Enhanced Tool Coordination System
 
 This creates a more intelligent meta-coding tool that can:

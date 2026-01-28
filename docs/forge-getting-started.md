@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # Getting Started with AI Project Forge
 
 AI Project Forge orchestrates multiple AI coding assistants through structured development phases to help you build any software project.

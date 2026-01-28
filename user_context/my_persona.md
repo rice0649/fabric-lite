@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # My Persona - A Living Document
 
 This document is a living reflection of who I am, what I value, and how I work. It's a tool for self-awareness and to help my collaborators (including AI) understand me better. This process will also serve as a template for understanding others.

@@ -1,3 +1,5 @@
+See /home/oak38/projects/AGENTS.md for auto-resume and security protocol.
+
 # fabric-lite Session Log
 # Project: fabric-lite - Lightweight AI augmentation framework
 # Location: /home/oak38/projects/fabric-lite/
